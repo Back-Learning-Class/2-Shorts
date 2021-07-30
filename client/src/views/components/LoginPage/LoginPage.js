@@ -8,6 +8,9 @@ function LoginPage() {
             <inputId></inputId>
             // 비밀번호 
             <inputPasswd></inputPasswd>
+            // 버튼
+            <LoginB></LoginB>
+
         </div>
     );
 }
@@ -27,10 +30,9 @@ function inputPasswd(){
             password : <input id="inputPasswd" type="password"></input>
         </div>
     );
-};
+}
 
 function LoginButton(){
-
     return(
         <div>
             <input type="button" onClick="">Login</input>
