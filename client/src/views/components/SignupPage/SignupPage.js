@@ -1,4 +1,3 @@
-import renderEmpty from "antd/lib/config-provider/renderEmpty";
 import React, { useEffect, useState } from "react";
 
 
@@ -65,7 +64,7 @@ function InputForm(){
     /* db 에 id를 조회해 id 검색결과를 반환해 주는 함수 */
     function selectId(){
 
-
+        setIdChkResult("");
         var mail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
         var mailResult = mail.test(inId);
         // 형식에 맞는경우 true
@@ -88,7 +87,7 @@ function InputForm(){
 
         // 중복검사 
 
-
+        setSltIdResult(2);
         return ;
     }
 
@@ -114,7 +113,7 @@ function InputForm(){
             setPswdChkResult("비밀번호를 8자리 이상, 20자리 이하로 설정해주세요 !!! ");
             return 1;
         }
-        else if (inPswd.search((/\s/) !== -1))
+        else if ( inPswd.includes(" " || "/\s/"))
         {
             setPswdChkResult("비밀번호는 공백없이 입력해주세요 !!! ");
             return 1;
@@ -178,7 +177,7 @@ function InputForm(){
     return(
         <div className="InputFom">
             id (email) : <input id='inputId' type='email'  onChange={ ifChange }></input>&nbsp;&nbsp;
-            <button type='button' onClick={ selectId() } >{ "중복확인" }</button><br />
+            <button type='button' onClick={ selectId } >{ "중복확인" }</button><br />
             <span style={{ color : 'red'}}>{ idChkResult }</span><br />
             password : <input id='inputPassword' type='password' onChange={ ifChange }></input><br /><span style={{ color : 'red'}}>{ pswdChkResult }</span>
             (최소 8자리 이상) <br />
