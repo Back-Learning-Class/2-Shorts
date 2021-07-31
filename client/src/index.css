@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.LoginPage {
+  width: 400px;
+  text-align:center; 
+  margin : 60px;
+  float: center;
+  background-color: aquamarine;
+  
+}
+
+.SignupPage {
+  text-align:center; 
+  margin : 30px;
+  float: center;
+  background-color: #BEEFFF;
+}
