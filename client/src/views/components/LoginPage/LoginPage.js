@@ -79,6 +79,7 @@ function InputLoginForm (){
     // Signup 버튼 클릭시 
     // Signup 페이지 호출 
     function callSignup(){
+        // 부모창 (메인페이지 ) Signup 페이지로 전환 
 
         return ;
     }
