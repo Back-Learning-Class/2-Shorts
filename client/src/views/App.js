@@ -1,7 +1,9 @@
 import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
+import LoginPage from "./components/LoginPage/LoginPage.js";
 import MainPage from "./components/MainPage/MainPage.js";
 import NavBar from "./components/NavPage/NavPage.js";
+import SignupPage from "./components/SignupPage/SignupPage.js"
 
 function App() {
   return (
@@ -10,6 +12,8 @@ function App() {
       <div style={{ paddingTop: "69px", minHeight: "calc(100vh - 80px)" }}>
         <Switch>
           <Route exact path="/" component={MainPage} />
+          <Route exact path="/Login" component={LoginPage} />
+          <Route exact path="/Signup" component={SignupPage} />
         </Switch>
       </div>
     </Suspense>
