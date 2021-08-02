@@ -20,12 +20,14 @@ app.listen(port, function () {
 });
 
 const KEY = "AIzaSyA2nJdF6tnRHzzHoJt-AtjbmWnxE_FuPXw";
+
+//const KEY = "AIzaSyCEivncDEIHZwGKpdjtngDXx_-EhdVtJdQ";
 let option = {
   uri: "https://www.googleapis.com/youtube/v3/search",
   qs: {
     part: "snippet", // snippet // id
     eventType: "completed",
-    maxResults: 4,
+    maxResults: 8,
     order: "viewCount",
     q: "#shorts",
     regionCode: "KR",
@@ -61,9 +63,9 @@ app.get("/", async (req, res) => {
   console.log("thumbnailsResult");
   console.log(thumbnailsResult);
 
-  res.send({
-    idResult: idResult,
-    titleResult: titleResult,
-    thumbnailsResult: thumbnailsResult
+  res.status(200).json({
+    idResult,
+    titleResult,
+    thumbnailsResult
   });
 });
