@@ -2,11 +2,7 @@
 
 # dependencies
 node_modules
-<<<<<<< HEAD
 .eslintcache
-=======
-.eslintcache
->>>>>>> jun-2
 /.pnp
 .pnp.js
 
