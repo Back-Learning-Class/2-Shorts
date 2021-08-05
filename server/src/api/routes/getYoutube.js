@@ -1,6 +1,10 @@
 import express from "express";
 import reqProm from "request-promise";
 // reqProm 버전 4.2.6
+import db from "../../../config/db.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const router = express.Router();
 
@@ -47,6 +51,12 @@ router.get("/", async (req, res) => {
 
   console.log("thumbnailsResult");
   console.log(thumbnailsResult);
+
+  let sql = "SELECT * FROM lock_extension";
+  db.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
 
   res.status(200).json({
     idResult,

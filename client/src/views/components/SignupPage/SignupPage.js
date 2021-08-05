@@ -78,7 +78,7 @@ function InputForm() {
 
     // 서버에 중복검사 요청
     axios
-      .post("/selectId", {
+      .post("http://localhost:5000/api/route/selectId", {
         reqId: inId
       })
       .then(function (response) {
@@ -185,7 +185,7 @@ function InputForm() {
     if (chkResult === 1) {
       // 서버에 등록 요청
       axios
-        .post("/enrollUser", {
+        .post("http://localhost:5000/api/register/", {
           enrollId: inId,
           enrollPswd: inPswd,
           enrollName: inName
