@@ -1,54 +1,4 @@
-//import mysql from "mysql";
 import db from "../config/db.js";
-/*const connection = mysql.createConnection({
-  host: "localhost",
-  user: "admin", // DB 접속 계정 id
-  password: "adminadmin", // DB 접속 계정 비밀번호
-  database: "2Shorts", // 접속 데이터베이스
-  dateStrings: "date"
-});*/
-
-/** 위쪽으로는 다른 파일에 구성해야함 - config 로 구성
- * ////////////////////////////////////////////////////////////////
- * ////////////////////////////////////////////////////////////////
- * ////////////////////////////////////////////////////////////////
- * ////////////////////////////////////////////////////////////////
- * ////////////////////////////////////////////////////////////////
- */
-
-// 테스트
-// --------------------------------------------------------------------
-/*
-connection.query("select * from user",(error, rows, fields) =>
-{
-    if(error)
-    {
-        throw error;
-    }
-    else
-    {
-        console.log(rows);
-        console.log("--------------------------------------");
-        console.log(rows[0]);
-        console.log("--------------------------------------");
-        console.log(rows[0].email);
-        console.log("--------------------------------------");
-    }
-});
-console.log("--------------------------------------");
-selectId({
-    id : "kimjung@naver.com",
-    password : "",
-    name : ""
-});
-console.log("--------------------------------------");
-enrollUser({
-    id : "home@home.com",
-    password : "home",
-    name : "마이홈"
-});
-*/
-// --------------------------------------------------------------------
 
 // id 중복검사
 export async function selectId(user) {
@@ -79,7 +29,6 @@ export async function selectId(user) {
 
 // 회원등록 처리
 export async function enrollUser(user) {
-  var enrollResult = "";
   var query =
     "INSERT INTO user (`id`, `email`, `name`, `password`, `admin`) VALUES ( (SELECT MAX(id)+1 FROM user AS id) , '" +
     user.id +
@@ -101,8 +50,8 @@ export async function enrollUser(user) {
   });
 }
 
+// 로그인 처리 
 export async function loginUser(user) {
-  //let chkid = "SELECT * FROM user WHERE email = '" + user.id + "'";
 
   return new Promise((resolve, reject) => {
     db.query("SELECT * FROM user WHERE email =? ", [user.id], (err, rows) => {
