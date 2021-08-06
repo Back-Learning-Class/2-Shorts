@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>test Page!</title>
+    <script>
+        // id 중복검사 요청 
+        async function selectIdTest()
+        {
+            console.log("서버에 중복검사 요청 ");
+            var testResult = document.getElementById("testResult");
+            var inId = document.getElementById("inValue");
+            
+            //보내는 데이터 구성
+            var data = {
+              reqId : inId.value
+            } 
+            var url = "/selectId";
+
+            var dataInfo = { 
+              method : "POST", //메소드 반드시 지정해줘야 app.js 파일에서 찾을수 있음. 
+              body : JSON.stringify(data), //JSON 형태로 변환 
+              headers : { "Content-Type" : "application/json" //타입지정 
+              } 
+            }; 
+            
+            const reqURL = await fetch(url,dataInfo); 
+            console.log("reqURL" + reqURL);
+            let result = await reqURL.json(); //JSON값 받아오기 
+
+            result = JSON.stringify(result) // String 변환 
+            console.log("result" + result);
+            
+            testResult.innerHTML = result;
+        }
+
+        async function enrollUserTest()
+        {
+          console.log("서버에 회원 등록 요청 ");
+          var inId = document.getElementById("inId");
+          var inPassword = document.getElementById("inPassword");
+          var inName = document.getElementById("inName");
+
+          var enrollTestResult = document.getElementById("enrollTestResult");
+
+          //보내는 데이터 구성
+          var data = {
+            reqId : inId.value,
+            reqPassword : inPassword.value,
+            reqName : inName.value
+          } 
+
+          var url = "/enrollUser";
+
+          var dataInfo = { 
+            method : "POST", //메소드 반드시 지정해줘야 app.js 파일에서 찾을수 있음. 
+            body : JSON.stringify(data), //JSON 형태로 변환 
+            headers : { "Content-Type" : "application/json" //타입지정 
+            } 
+          }; 
+          
+          const reqURL = await fetch(url,dataInfo); 
+          console.log("reqURL" + reqURL);
+          let result = await reqURL.json(); //JSON값 받아오기 
+          result = JSON.stringify(result) // String 변환 
+          console.log("result" + result);
+          
+          enrollTestResult.innerHTML = result;
+        }
+
+    </script>
+  </head>
+  <body>
+    <h1>Test Page</h1>
+    <h2>select Id Test</h2>
+    <input id="inValue" type="text"></text>
+    <button onclick="selectIdTest()"> selectIdTest </button>
+    <p id="testResult" style="font-size: large;"></p><br><br><br>
+
+    <h2>enroll user Test</h2>
+    id : <input id="inId" type="text"></text><br>
+    password : <input id="inPassword" type="text"></text><br>
+    name : <input id="inName" type="text"></text><br>
+    <button onclick="enrollUserTest()"> selectIdTest </button><br>
+    <p id="enrollTestResult" style="font-size: large;"></p>
+  </body>
+</html>
