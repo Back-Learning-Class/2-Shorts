@@ -42,9 +42,8 @@ function InputLoginForm() {
     } else {
       // 서버 로그인 요청
       axios
-        .post("http://localhost:5000/api/route/user/reqLogin", {
-          userId: inId,
-          userPswd: inPswd
+        .post("http://localhost:5000/api/route/reqLogin", {
+          userId: inId
         })
         .then(function (response) {
           // response

@@ -185,7 +185,7 @@ function InputForm() {
     if (chkResult === 1) {
       // 서버에 등록 요청
       axios
-        .post("http://localhost:5000/api/register/", {
+        .post("http://localhost:5000/api/route/enrollUser/", {
           enrollId: inId,
           enrollPswd: inPswd,
           enrollName: inName

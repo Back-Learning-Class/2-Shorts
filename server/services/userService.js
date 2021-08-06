@@ -100,3 +100,17 @@ export async function enrollUser(user) {
     });
   });
 }
+
+export async function loginUser(user) {
+  //let chkid = "SELECT * FROM user WHERE email = '" + user.id + "'";
+
+  return new Promise((resolve, reject) => {
+    db.query("SELECT * FROM user WHERE email =? ", [user.id], (err, rows) => {
+      if (err) {
+        reject(console.log(err));
+      }
+
+      resolve(console.log("success", rows));
+    });
+  });
+}

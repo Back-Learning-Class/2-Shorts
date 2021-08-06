@@ -5,6 +5,7 @@ import cors from "cors";
 import getData from "./src/api/routes/getYoutube.js";
 import enrolluser from "./src/api/routes/enrollUser.js";
 import selectid from "./src/api/routes/selectId.js";
+import loginuser from "./src/api/routes/loginId.js";
 
 //import postUser from "./src/api/routes/user.js";
 
@@ -16,8 +17,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/api/route/", getData);
-app.use("/api/register/", enrolluser);
+app.use("/api/route/", enrolluser);
 app.use("/api/route/", selectid);
+app.use("/api/route/", loginuser);
 //app.use("/api/route/user", postUser);
 
 app.listen(PORT, () => {

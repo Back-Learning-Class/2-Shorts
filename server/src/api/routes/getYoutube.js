@@ -52,12 +52,6 @@ router.get("/", async (req, res) => {
   console.log("thumbnailsResult");
   console.log(thumbnailsResult);
 
-  let sql = "SELECT * FROM lock_extension";
-  db.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log(result);
-  });
-
   res.status(200).json({
     idResult,
     titleResult,
