@@ -48,10 +48,12 @@ function InputLoginForm() {
         .then(function (response) {
           // response
           // 아이디 or 비밀번호 틀렸을경우
-          if (response.loginResult === 1) {
+          console.log("ttest", response.data.loginResult);
+          if (response.data.loginResult === 1) {
             setLoginResult("아이디 또는 비밀번호를 확인해주세요 !!!");
-          } else if (response.loginResult === 0) {
+          } else if (response.data.loginResult === 0) {
             // 로그인 성공 >>> 창 닫기 >>> 부모창 리로드
+            setLoginResult("성공");
           }
         })
         .catch(function (error) {

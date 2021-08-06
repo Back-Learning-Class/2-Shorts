@@ -7,15 +7,20 @@ const router = express.Router();
 router.post("/reqLogin", async (req, res) => {
   let user = model;
 
-  user.id = req.body.usesrId;
+  user.id = req.body.userId;
 
   let checkResult = await service.loginUser(user);
   console.log("ttest", checkResult);
 
-  res.status(200).json({
-    checkResult,
-    loginResult: 0
-  });
+  if (checkResult === 1) {
+    res.json({
+      loginResult: checkResult
+    });
+  } else {
+    res.status(200).json({
+      loginResult: checkResult
+    });
+  }
 });
 
 export default router;

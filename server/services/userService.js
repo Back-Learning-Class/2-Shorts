@@ -101,16 +101,24 @@ export async function enrollUser(user) {
   });
 }
 
+//로그인 아이디 확인
 export async function loginUser(user) {
   //let chkid = "SELECT * FROM user WHERE email = '" + user.id + "'";
 
   return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM user WHERE email =? ", [user.id], (err, rows) => {
-      if (err) {
-        reject(console.log(err));
+    db.query(
+      "SELECT email FROM user WHERE email =? ",
+      [user.id],
+      (err, rows) => {
+        if (err) {
+          reject(new Error(err));
+        }
+        if (rows.length === 0) {
+          resolve(1, console.log("fail 1 ", rows));
+        } else {
+          resolve(0, console.log("suceess 0  ", rows));
+        }
       }
-
-      resolve(console.log("success", rows));
-    });
+    );
   });
 }
