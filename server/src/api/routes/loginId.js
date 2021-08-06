@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/reqLogin", async (req, res) => {
   let user = model;
 
-  user.id = req.body.usesrId;
+  user.id = req.body.userId;
 
   let checkResult = await service.loginUser(user);
   console.log("ttest", checkResult);
