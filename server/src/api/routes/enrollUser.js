@@ -9,9 +9,9 @@ router.post("/enrollUser", async (req, res) => {
 
   // req 로 값 받아와서
   // user 객체에 담고
-  user.id = req.body.reqId;
-  user.password = req.body.reqPassword;
-  user.name = req.body.name;
+  user.id = req.body.enrollId;
+  user.password = req.body.enrollPswd;
+  user.name = req.body.enrollName;
 
   // db 에 등록
   let enrollResult = await service.enrollUser(user);
