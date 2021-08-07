@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function LoginPage() {
-  return (
+function LoginPage(props) {
+  /*return (
     <div className="LoginPage">
       <br />
       <InputLoginForm />
     </div>
-  );
-}
+  );*/
 
-// 로그인 form
-function InputLoginForm() {
+  // 로그인 form
   let [inId, setInId] = useState(""); // 아이디 입력값
   let [inPswd, setInPswd] = useState(""); // 비밀번호 입력값
 
@@ -31,7 +29,6 @@ function InputLoginForm() {
   // submit 전 양식 최종검사
   function chkForm() {
     setLoginResult(""); // 경고메세지 초기화
-
     // 아이디 or 비밀번호 미입력시
     if (inId.length <= 0) {
       setLoginResult("아이디를 입력해주세요 !!!");
@@ -43,26 +40,30 @@ function InputLoginForm() {
       // 서버 로그인 요청
       axios
         .post("http://localhost:5000/api/route/reqLogin", {
-          userId: inId
+          userId: inId,
+          userPswd: inPswd
         })
         .then(function (response) {
           // response
           // 아이디 or 비밀번호 틀렸을경우
           console.log("ttest", response.data.loginResult);
           if (response.data.loginResult === 1) {
-            setLoginResult("아이디 또는 비밀번호를 확인해주세요 !!!");
+            setLoginResult("아이디를 확인해주세요 !!!");
+          } else if (response.data.loginResult === 2) {
+            setLoginResult("비밀번호를 확인해주세요 !!!");
           } else if (response.data.loginResult === 0) {
             // 로그인 성공 >>> 창 닫기 >>> 부모창 리로드
             setLoginResult("성공");
+            props.history.push("/");
           }
         })
         .catch(function (error) {
           // 오류발생시 실행
           setLoginResult("로그인 오류 다시 시도해주세요!!!\n" + error);
-        })
-        .then(function () {
-          // 항상 실행
         });
+      /*.then(function () {
+          // 항상 실행
+        });*/
     }
     return;
   }
@@ -76,22 +77,25 @@ function InputLoginForm() {
   }
 
   return (
-    <div className="InputId">
-      id (email) : <input id="inputId" type="email" onChange={ifChange}></input>
-      <br />
-      password :{" "}
-      <input id="inputPswd" type="password" onChange={ifChange}></input>
-      <br />
-      <span style={{ color: "red" }}>{loginResult}</span>
-      <br />
-      <button type="button" onClick={chkForm}>
-        {"Login"}
-      </button>
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <button type="button" onClick={chkForm}>
-        {"Sign up"}
-      </button>
-      <br />
+    <div className="LoginPage">
+      <div className="InputId">
+        id (email) :{" "}
+        <input id="inputId" type="email" onChange={ifChange}></input>
+        <br />
+        password :{" "}
+        <input id="inputPswd" type="password" onChange={ifChange}></input>
+        <br />
+        <span style={{ color: "red" }}>{loginResult}</span>
+        <br />
+        <button type="button" onClick={chkForm}>
+          {"Login"}
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" onClick={chkForm}>
+          {"Sign up"}
+        </button>
+        <br />
+      </div>
     </div>
   );
 }

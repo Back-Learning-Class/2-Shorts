@@ -107,15 +107,18 @@ export async function loginUser(user) {
 
   return new Promise((resolve, reject) => {
     db.query(
-      "SELECT email FROM user WHERE email =? ",
+      "SELECT email, password FROM user WHERE email =? ",
       [user.id],
       (err, rows) => {
         if (err) {
           reject(new Error(err));
         }
+
         if (rows.length === 0) {
-          resolve(1, console.log("fail 1 ", rows));
-        } else {
+          resolve(1, console.log("Id fail 1 ", user));
+        } else if (rows[0].password != user.password) {
+          resolve(2, console.log("password fail 2 ", rows[0].email));
+        } else if (rows[0].password == user.password) {
           resolve(0, console.log("suceess 0  ", rows));
         }
       }

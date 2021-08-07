@@ -8,11 +8,12 @@ router.post("/reqLogin", async (req, res) => {
   let user = model;
 
   user.id = req.body.userId;
+  user.password = req.body.userPswd;
 
   let checkResult = await service.loginUser(user);
   console.log("ttest", checkResult);
 
-  if (checkResult === 1) {
+  if (checkResult === 1 || checkResult === 2) {
     res.json({
       loginResult: checkResult
     });
