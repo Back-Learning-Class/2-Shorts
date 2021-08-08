@@ -7,7 +7,7 @@ export async function selectId(user) {
   return new Promise((resolve, reject) => {
     db.query(query, (error, rows, fields) => {
       if (error) {
-        console.log("select error !!!");
+        console.log("에러발생 : services/userService select error !!!");
         reject(new Error(error));
       } else {
         // 존재하지않는 경우 : 빈값
@@ -29,6 +29,9 @@ export async function selectId(user) {
 
 // 회원등록 처리
 export async function enrollUser(user) {
+  console.log(user.id);
+  console.log(user.name);
+  console.log(user.password);
   var query =
     "INSERT INTO user (`id`, `email`, `name`, `password`, `admin`) VALUES ( (SELECT MAX(id)+1 FROM user AS id) , '" +
     user.id +
@@ -41,10 +44,19 @@ export async function enrollUser(user) {
   return new Promise((resolve, reject) => {
     db.query(query, (error, rows, fields) => {
       if (error) {
-        console.log("insert error !!!");
+        // db 처리 에러 
+        console.log("에러발생 : services/userService insert error !!!");
         reject(new Error(error));
       } else {
-        resolve(rows);
+        // insert 성공시 OkPacket 반환 
+        // OkPacket 가진 정보 참고 
+        if (rows.serverStatus) {
+          // 등록 성공
+          resolve(0);
+        } else {
+          // 등록 실패 
+          resolve(-1);
+        }
       }
     });
   });
@@ -52,7 +64,6 @@ export async function enrollUser(user) {
 
 // 로그인 처리 
 export async function loginUser(user) {
-
   return new Promise((resolve, reject) => {
     db.query("SELECT * FROM user WHERE email =? ", [user.id], (err, rows) => {
       if (err) {
