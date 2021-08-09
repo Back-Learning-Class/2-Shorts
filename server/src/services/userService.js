@@ -1,5 +1,5 @@
 //import mysql from "mysql";
-import db from "../config/db.js";
+import db from "../../config/db.js";
 /*const connection = mysql.createConnection({
   host: "localhost",
   user: "admin", // DB 접속 계정 id
