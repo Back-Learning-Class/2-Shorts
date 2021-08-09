@@ -14,14 +14,20 @@ router.post("/selectId", async (req, res) => {
   user.id = req.body.reqId;
 
   // db 에 조회
-  let selectResult = await service.selectId(user);
-  console.log("최종 조회 결과 selectResult");
-  console.log("selectid", selectResult);
-
-  // 조회 결과 res
-  res.send({
-    selectResult: selectResult
-  });
+  try {
+    let selectResult = await service.selectId(user);
+    // 조회 결과 res
+    res.send({
+      selectResult: selectResult //미중복 : 0 , 중복 : -1 , 에러 : -2
+    });
+  } catch (error){
+    console.log("에러발생 : router/selectId selectId");
+    console.log(error);
+    let selectResult = -2; // 에러시 
+    res.send ({
+      selectResult: selectResult // 에러발생 시 res 값 
+    })
+  }
 });
 
 export default router;

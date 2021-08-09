@@ -16,13 +16,22 @@ router.post("/enrollUser", async (req, res) => {
   user.name = req.body.enrollName;
 
   // db 에 등록
-  let enrollResult = await service.enrollUser(user);
-  console.log("최종 등록 결과 enrollResult : " + enrollResult);
-
-  // 등록 결과 res
-  res.send({
-    enrollResult: enrollResult
-  });
+  try {
+    let enrollResult = await service.enrollUser(user);
+    // 등록 결과 res
+    res.send({
+      enrollResult: enrollResult // 등록성공 : 0 , 실패 : -1 , 에러 : -2
+    });
+  } catch (error) {
+    let enrollResult = -2;
+    console.log("에러발생 : router/enrollUser enrollUser");
+    console.log(error);
+    // 등록 결과 res
+    res.send({
+      enrollResult: enrollResult // 등록성공 : 0 , 실패 : -1 , 에러 : -2
+    });
+  }
 });
 
 export default router;
+

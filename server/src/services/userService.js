@@ -1,54 +1,4 @@
-//import mysql from "mysql";
-import db from "../../config/db.js";
-/*const connection = mysql.createConnection({
-  host: "localhost",
-  user: "admin", // DB 접속 계정 id
-  password: "adminadmin", // DB 접속 계정 비밀번호
-  database: "2Shorts", // 접속 데이터베이스
-  dateStrings: "date"
-});*/
-
-/** 위쪽으로는 다른 파일에 구성해야함 - config 로 구성
- * ////////////////////////////////////////////////////////////////
- * ////////////////////////////////////////////////////////////////
- * ////////////////////////////////////////////////////////////////
- * ////////////////////////////////////////////////////////////////
- * ////////////////////////////////////////////////////////////////
- */
-
-// 테스트
-// --------------------------------------------------------------------
-/*
-connection.query("select * from user",(error, rows, fields) =>
-{
-    if(error)
-    {
-        throw error;
-    }
-    else
-    {
-        console.log(rows);
-        console.log("--------------------------------------");
-        console.log(rows[0]);
-        console.log("--------------------------------------");
-        console.log(rows[0].email);
-        console.log("--------------------------------------");
-    }
-});
-console.log("--------------------------------------");
-selectId({
-    id : "kimjung@naver.com",
-    password : "",
-    name : ""
-});
-console.log("--------------------------------------");
-enrollUser({
-    id : "home@home.com",
-    password : "home",
-    name : "마이홈"
-});
-*/
-// --------------------------------------------------------------------
+import db from "../config/db.js";
 
 // id 중복검사
 export async function selectId(user) {
@@ -57,7 +7,7 @@ export async function selectId(user) {
   return new Promise((resolve, reject) => {
     db.query(query, (error, rows, fields) => {
       if (error) {
-        console.log("select error !!!");
+        console.log("에러발생 : services/userService select error !!!");
         reject(new Error(error));
       } else {
         // 존재하지않는 경우 : 빈값
@@ -79,7 +29,9 @@ export async function selectId(user) {
 
 // 회원등록 처리
 export async function enrollUser(user) {
-  var enrollResult = "";
+  console.log(user.id);
+  console.log(user.name);
+  console.log(user.password);
   var query =
     "INSERT INTO user (`id`, `email`, `name`, `password`, `admin`) VALUES ( (SELECT MAX(id)+1 FROM user AS id) , '" +
     user.id +
@@ -92,10 +44,19 @@ export async function enrollUser(user) {
   return new Promise((resolve, reject) => {
     db.query(query, (error, rows, fields) => {
       if (error) {
-        console.log("insert error !!!");
+        // db 처리 에러 
+        console.log("에러발생 : services/userService insert error !!!");
         reject(new Error(error));
       } else {
-        resolve(rows);
+        // insert 성공시 OkPacket 반환 
+        // OkPacket 가진 정보 참고 
+        if (rows.serverStatus) {
+          // 등록 성공
+          resolve(0);
+        } else {
+          // 등록 실패 
+          resolve(-1);
+        }
       }
     });
   });
