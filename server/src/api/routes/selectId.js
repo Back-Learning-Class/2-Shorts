@@ -1,10 +1,12 @@
 import express from "express";
 import model from "../../models/user.js"; // user 객체
 import * as service from "../../../services/userService.js"; // db 처리 서비스
+import { logger } from "../../../config/winston.js"; //로거
 
 const router = express.Router();
 
 router.post("/selectId", async (req, res) => {
+  logger.info("POST /");
   var user = model;
 
   // req 로 값 받아와서

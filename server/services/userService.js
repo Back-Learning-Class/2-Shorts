@@ -101,10 +101,11 @@ export async function enrollUser(user) {
   });
 }
 
-//로그인 아이디 확인
+//로그인을 위한 아이디 비밀번호 확인
 export async function loginUser(user) {
   //let chkid = "SELECT * FROM user WHERE email = '" + user.id + "'";
 
+  //추후 비밀번호 암호화 후 설정 다시 변경 해야함
   return new Promise((resolve, reject) => {
     db.query(
       "SELECT email, password FROM user WHERE email =? ",
