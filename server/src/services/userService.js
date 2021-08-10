@@ -1,5 +1,5 @@
 //import mysql from "mysql";
-import db from "../config/db.js";
+import db from "../../config/db.js";
 /*const connection = mysql.createConnection({
   host: "localhost",
   user: "admin", // DB 접속 계정 id
@@ -101,16 +101,28 @@ export async function enrollUser(user) {
   });
 }
 
+//로그인을 위한 아이디 비밀번호 확인
 export async function loginUser(user) {
   //let chkid = "SELECT * FROM user WHERE email = '" + user.id + "'";
 
+  //추후 비밀번호 암호화 후 설정 다시 변경 해야함
   return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM user WHERE email =? ", [user.id], (err, rows) => {
-      if (err) {
-        reject(console.log(err));
-      }
+    db.query(
+      "SELECT email, password FROM user WHERE email =? ",
+      [user.id],
+      (err, rows) => {
+        if (err) {
+          reject(new Error(err));
+        }
 
-      resolve(console.log("success", rows));
-    });
+        if (rows.length === 0) {
+          resolve(1, console.log("Id fail 1 ", user));
+        } else if (rows[0].password != user.password) {
+          resolve(2, console.log("password fail 2 ", rows[0].email));
+        } else if (rows[0].password == user.password) {
+          resolve(0, console.log("suceess 0  ", rows));
+        }
+      }
+    );
   });
 }

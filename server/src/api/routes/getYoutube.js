@@ -3,6 +3,7 @@ import reqProm from "request-promise";
 // reqProm 버전 4.2.6
 import db from "../../../config/db.js";
 import dotenv from "dotenv";
+import { logger } from "../../../config/winston.js"; //로거
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ router.get("/", async (req, res) => {
   let idResult = new Array(); // 동영상의 아이디가 저장되는 Array
   let titleResult = new Array(); // 동영상의 제목이 저장되는 Array
   let thumbnailsResult = new Array(); // 동영상의 썸네일 url 이 저장되는 Array // high 로 픽스
+  logger.info("GET / ");
 
   let apiResult = await reqProm(option);
 
