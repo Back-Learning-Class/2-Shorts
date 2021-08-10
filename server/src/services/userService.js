@@ -44,17 +44,17 @@ export async function enrollUser(user) {
   return new Promise((resolve, reject) => {
     db.query(query, (error, rows, fields) => {
       if (error) {
-        // db 처리 에러 
+        // db 처리 에러
         console.log("에러발생 : services/userService insert error !!!");
         reject(new Error(error));
       } else {
-        // insert 성공시 OkPacket 반환 
-        // OkPacket 가진 정보 참고 
+        // insert 성공시 OkPacket 반환
+        // OkPacket 가진 정보 참고
         if (rows.serverStatus) {
           // 등록 성공
           resolve(0);
         } else {
-          // 등록 실패 
+          // 등록 실패
           resolve(-1);
         }
       }
