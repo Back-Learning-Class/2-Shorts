@@ -2,7 +2,7 @@
 
 # dependencies
 node_modules
-.eslintcache
+db.js
 /.pnp
 .pnp.js
 
