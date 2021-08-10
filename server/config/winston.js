@@ -23,7 +23,7 @@ const logger = winston.createLogger({
       level: "info",
       datePattern: "YYYY-MM-DD",
       //dirname: logDir,
-      filename: `${appRoot}/info/%DATE%.log`,
+      filename: `${appRoot}/log/info/%DATE%.log`,
       maxFiles: 30, // 30일치 로그 파일 저장
       zippedArchive: true
     }),
@@ -32,7 +32,7 @@ const logger = winston.createLogger({
       level: "error",
       datePattern: "YYYY-MM-DD",
       //dirname: logDir + "/error", // error.log 파일은 /logs/error 하위에 저장
-      filename: `${appRoot}/error/%DATE%.log`,
+      filename: `${appRoot}/log/error/%DATE%.log`,
       maxFiles: 30,
       zippedArchive: true
     })
