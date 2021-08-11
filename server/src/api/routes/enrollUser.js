@@ -1,7 +1,7 @@
 import express from "express";
 import model from "../../models/user.js"; // user 객체
 import * as service from "../../services/userService.js"; // db 처리 서비스
-import { logger } from "../../../config/winston.js"; //로거
+import logger from "../../../config/winston.js"; //로거
 
 const router = express.Router();
 
@@ -34,4 +34,3 @@ router.post("/enrollUser", async (req, res) => {
 });
 
 export default router;
-

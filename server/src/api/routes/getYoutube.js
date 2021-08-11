@@ -3,7 +3,7 @@ import reqProm from "request-promise";
 // reqProm 버전 4.2.6
 import db from "../../../config/db.js";
 import dotenv from "dotenv";
-import { logger } from "../../../config/winston.js"; //로거
+import logger from "../../../config/winston.js"; //로거
 
 dotenv.config();
 

@@ -1,0 +1,14 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "/Users/jun/2-Shorts/server/log/http/.1356316c95d64790ee9aff47d1d0dedda52d8f14-audit.json",
+    "files": [
+        {
+            "date": 1628671267871,
+            "name": "/Users/jun/2-Shorts/server/log/http/2021-08-11.log",
+            "hash": "1c790d395b104e803cd8570525f068aa"
+        }
+    ]
+}
