@@ -83,15 +83,20 @@ function InputForm() {
       })
       .then(function (response) {
         // response
-        if (response.selectResult === 1) {
+        if (response.selectResult === 0) {
           // 중복
           setIdChkResult("이미 등록된 계정입니다 !!!");
           setSltIdResult(1); // 중복검사 후 중복발생
-        } else if (response.selectResult === 0) {
+        } else if (response.selectResult === -1) {
           // 중복 없음 >>> 사용가능
           setAlertColor({ color: "blue" });
           setIdChkResult("사용가능 !!!");
           setSltIdResult(2); // 중복검사 후 사용가능
+        }
+        else if (response.selectResult === -2) {
+          setAlertColor({ color: "red" });
+          setIdChkResult("조회 중 에러 발생 !!!\n다시 시도해주세요 !!!");
+          setSltIdResult(1); // 중복검사 중 에러발생
         }
       })
       .catch(function (error) {
@@ -161,7 +166,7 @@ function InputForm() {
     if (sltIdResult === 1) {
       // id 중복 문제 미해결
       setIdChkResult(
-        "해당 id 가 이미 존재합니다. 중복검사를 다시 실시해주세요."
+        "중복검사를 다시 실시해주세요."
       );
       chkResult = 1;
       return;
@@ -192,12 +197,12 @@ function InputForm() {
         })
         .then(function (response) {
           // response
-          if (response.selectResult === 1) {
+          if (response.enrollResult === -1) {
             // 회원등록 실패
             setResultEnroll(
               "등록에 실패했습니다. 잠시 후 다시 시도해주세요 !!! "
             );
-          } else if (response.selectResult === 0) {
+          } else if (response.enrollResult === 0) {
             // 회원등록 성공
             // 메인페이지 진입
           }
