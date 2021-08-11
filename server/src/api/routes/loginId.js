@@ -6,7 +6,7 @@ import { logger } from "../../../config/winston.js"; //로거
 const router = express.Router();
 
 router.post("/reqLogin", async (req, res) => {
-  logger.info("POST /");
+  logger.info("POST / ");
   let user = model;
 
   user.id = req.body.userId;
