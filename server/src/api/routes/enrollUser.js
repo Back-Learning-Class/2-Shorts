@@ -25,7 +25,7 @@ router.post("/enrollUser", async (req, res) => {
   } catch (error) {
     let enrollResult = -2;
     console.log("에러발생 : router/enrollUser enrollUser");
-    console.log(error);
+    logger.error("ERROR enrollResult");
     // 등록 결과 res
     res.send({
       enrollResult: enrollResult // 등록성공 : 0 , 실패 : -1 , 에러 : -2

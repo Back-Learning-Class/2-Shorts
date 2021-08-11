@@ -22,7 +22,7 @@ router.post("/selectId", async (req, res) => {
     });
   } catch (error) {
     console.log("에러발생 : router/selectId selectId");
-    console.log(error);
+    logger.error("ERROR enrollResult");
     let selectResult = -2; // 에러시
     res.send({
       selectResult: selectResult // 에러발생 시 res 값

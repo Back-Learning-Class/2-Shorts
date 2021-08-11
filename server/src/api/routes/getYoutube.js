@@ -1,7 +1,6 @@
 import express from "express";
 import reqProm from "request-promise";
 // reqProm 버전 4.2.6
-import db from "../../../config/db.js";
 import dotenv from "dotenv";
 import logger from "../../../config/winston.js"; //로거
 
@@ -38,27 +37,34 @@ router.get("/", async (req, res) => {
   let thumbnailsResult = new Array(); // 동영상의 썸네일 url 이 저장되는 Array // high 로 픽스
   logger.info("GET / ");
 
-  let apiResult = await reqProm(option);
+  try {
+    let apiResult = await reqProm(option);
+    for (var i = 0; i < option.qs.maxResults; i++) {
+      idResult.push(apiResult.items[i].id.videoId);
+      titleResult.push(apiResult.items[i].snippet.title);
+      thumbnailsResult.push(apiResult.items[i].snippet.thumbnails.high.url);
+    }
+    console.log("idResult");
+    console.log(idResult);
 
-  for (var i = 0; i < option.qs.maxResults; i++) {
-    idResult.push(apiResult.items[i].id.videoId);
-    titleResult.push(apiResult.items[i].snippet.title);
-    thumbnailsResult.push(apiResult.items[i].snippet.thumbnails.high.url);
+    console.log("titleResult");
+    console.log(titleResult);
+
+    console.log("thumbnailsResult");
+    console.log(thumbnailsResult);
+
+    res.status(200).json({
+      idResult,
+      titleResult,
+      thumbnailsResult
+    });
+  } catch (error) {
+    logger.error("ERROR getYoutube");
+    res.status(400).json({
+      success: false,
+      error
+    });
   }
-  console.log("idResult");
-  console.log(idResult);
-
-  console.log("titleResult");
-  console.log(titleResult);
-
-  console.log("thumbnailsResult");
-  console.log(thumbnailsResult);
-
-  res.status(200).json({
-    idResult,
-    titleResult,
-    thumbnailsResult
-  });
 });
 
 export default router;
