@@ -1,5 +1,5 @@
 import express from "express";
-import model from "../../models/user.js"; // user 객체
+import User from "../../models/user.js"; // user 객체
 import * as service from "../../services/userService.js"; // db 처리 서비스
 import { logger } from "../../../config/winston.js"; //로거
 
@@ -7,11 +7,12 @@ const router = express.Router();
 
 router.post("/selectId", async (req, res) => {
   logger.info("POST /");
-  var user = model;
+  //var user = model;
+  var user = new User(req.body.reqId, "", "");
 
   // req 로 값 받아와서
   // user 객체에 담고
-  user.id = req.body.reqId;
+  //user.id = req.body.reqId;
 
   // db 에 조회
   try {
