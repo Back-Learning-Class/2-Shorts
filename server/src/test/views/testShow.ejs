@@ -76,6 +76,42 @@
           }
         }
 
+        async function loginidTest() {
+          console.log("로그인 테스트 ");
+          var loginId = document.getElementById("inId");
+          var loginPassword = document.getElementById("inPassword");
+          
+
+          var loginTestResult = document.getElementById("loginTestResult");
+
+          //보내는 데이터 구성
+          var data = {
+            userId : loginId.value,
+            userPswd : loginPassword.value,
+          } 
+
+           var url = "http://localhost:5000/api/route/reqLogin/";
+
+          var dataInfo = { 
+            method : "POST", //메소드 반드시 지정해줘야 app.js 파일에서 찾을수 있음. 
+            body : JSON.stringify(data), //JSON 형태로 변환 
+            headers : { "Content-Type" : "application/json" //타입지정 
+            } 
+          }; 
+          try {
+            const reqURL = await fetch(url,dataInfo); 
+            console.log("reqURL" + reqURL);
+            let result = await reqURL.json(); //JSON값 받아오기 
+            result = JSON.stringify(result) // String 변환 
+            console.log("result" + result);
+            
+            loginTestResult.innerHTML = result;
+
+          } catch (error) {
+            console.log(error);
+          }
+        }
+
     </script>
   </head>
   <body>
@@ -93,5 +129,14 @@
     name : <input id="inName" type="text"></text><br>
     <button onclick="enrollUserTest()"> selectIdTest </button><br>
     <p id="enrollTestResult" style="font-size: large;"></p>
+
+<h2>login user Test</h2>
+    <h3>****성공 : 0, ID 실패 : 1, PASSWORD 실패 : 2</h3>
+    id : <input id="loginId" type="text"></text><br>
+    password : <input id="loginPassword" type="text"></text><br>
+    <button onclick="loginidTest()"> loginTest </button><br>
+    <p id="loginTestResult" style="font-size: large;"></p>
+
+
   </body>
 </html>
