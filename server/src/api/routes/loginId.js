@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/reqLogin", async (req, res) => {
   logger.info("POST / ");
   //let user = model;
-  var user = new User(req.body.userId, req.body.userPswd, "");
+  let user = new User(req.body.userId, req.body.userPswd, "");
 
   //user.id = req.body.userId;
   //user.password = req.body.userPswd;

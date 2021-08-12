@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/selectId", async (req, res) => {
   logger.info("POST /");
   //var user = model;
-  var user = new User(req.body.reqId, "", "");
+  let user = new User(req.body.reqId, "", "");
 
   // req 로 값 받아와서
   // user 객체에 담고

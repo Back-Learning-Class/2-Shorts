@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post("/enrollUser", async (req, res) => {
   //var user = model;
-  var user = new User(req.body.enrollId, req.body.enrollPswd, req.body.enrollName)
+  let user = new User(req.body.enrollId, req.body.enrollPswd, req.body.enrollName)
   logger.info("POST / ");
 
   // req 로 값 받아와서
