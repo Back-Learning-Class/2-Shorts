@@ -10,9 +10,9 @@ dotenv.config();
 
 const con = mysql.createConnection({
   host: "localhost",
-  user: "root",
-  password: "root",
-  database: "user"
+  user: "admin",
+  password: "adminadmin",
+  database: "2Shorts"
   /*dialect: mysql,
   pool: {
     max: 5,
