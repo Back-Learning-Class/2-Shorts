@@ -1,13 +1,60 @@
 import express from "express";
-import model from "../../models/user.js"; // user 객체
 import * as service from "../../services/userService.js"; // db 처리 서비스
 import { logger } from "../../../config/winston.js"; //로거
-import User from "../../models/user.js";
+// 시퀄라이저 적용 전 
+// import model from "../../models/user.js"; // user 객체
+// import User from "../../models/user.js";
+
+// 시퀄라이저 적용 후 
+import User from "../../models/userModel.js"; // 시퀄라이저 모델 
 
 const router = express.Router();
 
 router.post("/reqLogin", async (req, res) => {
   logger.info("POST / ");
+  try{
+    const selectResult = await User.findAll({
+      attributes:['email', 'password'],
+      where: {
+        email: req.body.userId
+      }
+    })
+
+    // 성공 0 // id 없음 : -1 // 비밀번호 틀림 : -2 // 에러 -3
+    if (selectResult.length != 0)
+    {
+      if (selectResult[0].dataValues.password === req.body.userPswd)
+      {
+        console.log("success 0");
+        res.send({
+          selectResult: 0
+        })
+      }
+      else 
+      {
+        console.log("password fail -2");
+        res.send({
+          selectResult: -2
+        })
+      }
+    }
+    else {
+      console.log("Id fail -1");
+      res.send({
+        selectResult: -1
+      })
+    }
+  }
+  catch ( error ) {
+    console.log("에러발생 : router/loginId");
+    console.log(error);
+    res.send ({
+      selectResult: -3 // 에러발생 시 res 값 
+    })
+  }
+
+  // 시퀄라이저 적용 전 
+  /*
   //let user = model;
   let user = new User(req.body.userId, req.body.userPswd, "");
 
@@ -26,6 +73,7 @@ router.post("/reqLogin", async (req, res) => {
       loginResult: checkResult
     });
   }
+  */
 });
 
 export default router;

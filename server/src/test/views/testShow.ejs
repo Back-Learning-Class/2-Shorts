@@ -78,8 +78,10 @@
 
         async function loginidTest() {
           console.log("로그인 테스트 ");
-          var loginId = document.getElementById("inId");
-          var loginPassword = document.getElementById("inPassword");
+          var loginId = document.getElementById("loginId");
+          var loginPassword = document.getElementById("loginPassword");
+          console.log(loginId.value);
+          console.log(loginPassword.value);
           
 
           var loginTestResult = document.getElementById("loginTestResult");
@@ -128,15 +130,13 @@
     password : <input id="inPassword" type="text"></text><br>
     name : <input id="inName" type="text"></text><br>
     <button onclick="enrollUserTest()"> selectIdTest </button><br>
-    <p id="enrollTestResult" style="font-size: large;"></p>
+    <p id="enrollTestResult" style="font-size: large;"></p><br><br><br>
 
-<h2>login user Test</h2>
-    <h3>****성공 : 0, ID 실패 : 1, PASSWORD 실패 : 2</h3>
+    <h2>login user Test</h2>
+    <h3>****성공 : 0, ID 실패 : -1, PASSWORD 실패 : -2 에러 : -3</h3>
     id : <input id="loginId" type="text"></text><br>
     password : <input id="loginPassword" type="text"></text><br>
     <button onclick="loginidTest()"> loginTest </button><br>
     <p id="loginTestResult" style="font-size: large;"></p>
-
-
   </body>
 </html>
