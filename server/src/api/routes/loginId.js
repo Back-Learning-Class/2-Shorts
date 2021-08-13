@@ -2,15 +2,17 @@ import express from "express";
 import model from "../../models/user.js"; // user 객체
 import * as service from "../../services/userService.js"; // db 처리 서비스
 import { logger } from "../../../config/winston.js"; //로거
+import User from "../../models/user.js";
 
 const router = express.Router();
 
 router.post("/reqLogin", async (req, res) => {
   logger.info("POST / ");
-  let user = model;
+  //let user = model;
+  let user = new User(req.body.userId, req.body.userPswd, "");
 
-  user.id = req.body.userId;
-  user.password = req.body.userPswd;
+  //user.id = req.body.userId;
+  //user.password = req.body.userPswd;
 
   let checkResult = await service.loginUser(user);
   console.log("ttest", checkResult);

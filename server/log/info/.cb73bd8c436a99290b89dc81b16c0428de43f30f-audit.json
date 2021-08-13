@@ -1,0 +1,14 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "/Users/jinwoojeon/Dev/Project/shortYoutubeProject/2-Shorts/server/log/info/.cb73bd8c436a99290b89dc81b16c0428de43f30f-audit.json",
+    "files": [
+        {
+            "date": 1628758995078,
+            "name": "/Users/jinwoojeon/Dev/Project/shortYoutubeProject/2-Shorts/server/log/info/2021-08-12.log",
+            "hash": "827a4ba851e47cda357e69d3acaec1c7"
+        }
+    ]
+}
