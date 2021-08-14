@@ -3,6 +3,7 @@ import ejs from "ejs"; // 테스트를 위한 ejs
 import express from "express";
 // express 버전 4.17.1
 import cors from "cors";
+import dbSeq from "../models/sequelize.js" // 시퀄라이저 
 
 import getData from "../api/routes/getYoutube.js";
 import enrolluser from "../api/routes/enrollUser.js";
@@ -23,6 +24,17 @@ app.set('view engine', 'ejs'); // ejs라는 템플릿
 app.engine('html', ejs.renderFile);
 // ################################################################
 
+
+// 시퀄라이저 호출 
+// 빼먹으면 데이터베이스에 연결이 되지 않는다. 
+// sequelize.sync() 를 통해 데이터베이스에 연결이 된다.
+dbSeq.sequelize.sync({force : false})
+  .then(()=>{
+    console.log("데이터베이스 연결 성공");
+  })
+  .catch((error)=>{
+    console.log(error);
+  })
 
 app.use("/api/route/", getData);
 app.use("/api/route/", enrolluser);

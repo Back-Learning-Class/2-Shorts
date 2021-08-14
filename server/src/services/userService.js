@@ -1,3 +1,4 @@
+// 시퀄라이저 사용시 사용되지 않음 
 import db from "../../config/db.js";
 
 // id 중복검사
