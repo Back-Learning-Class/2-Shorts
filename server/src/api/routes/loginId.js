@@ -3,6 +3,7 @@ import * as service from "../../services/userService.js"; // db 처리 서비스
 import { logger } from "../../../config/winston.js"; //로거
 import jwt from "jsonwebtoken";
 import { auth } from "../../../middleware/auth.js";
+import moment from "moment-timezone";
 // 시퀄라이저 적용 전
 // import model from "../../models/user.js"; // user 객체
 // import User from "../../models/user.js";
@@ -11,7 +12,7 @@ import { auth } from "../../../middleware/auth.js";
 import User from "../../models/userModel.js"; // 시퀄라이저 모델
 const router = express.Router();
 
-router.post("/reqLogin", auth, async (req, res) => {
+router.post("/reqLogin", async (req, res) => {
   logger.info("POST / ");
   try {
     const selectResult = await User.findAll({
@@ -26,12 +27,15 @@ router.post("/reqLogin", auth, async (req, res) => {
       if (selectResult[0].dataValues.password === req.body.userPswd) {
         console.log("success 0");
         let token = jwt.sign(selectResult[0].dataValues.email, "sEcReAt");
+        let tokenExp = moment().add(1, "hour").valueOf();
 
-        res.cookie("w_auth", token);
+        res.cookie("w_auth", token, { httpOnly: true });
+        res.cookie("w_authExp", tokenExp, { httpOnly: true });
         console.log("cookie test", req.cookies);
-        res.send({
+        res.status(200).json({
           selectResult: 0,
           token: token
+          //isAuth: true
         });
       } else {
         console.log("password fail -2");

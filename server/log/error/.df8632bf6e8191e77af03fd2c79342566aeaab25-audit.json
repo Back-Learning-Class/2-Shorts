@@ -19,6 +19,26 @@
             "date": 1629017023728,
             "name": "/Users/jun/2-Shorts/server/log/error/2021-08-15.log",
             "hash": "921f728ad9a9781043f8a9c65995803a"
+        },
+        {
+            "date": 1629101961022,
+            "name": "/Users/jun/2-Shorts/server/log/error/2021-08-16.log",
+            "hash": "0b33e5cadee9cae14d4c6dc312bf401b"
+        },
+        {
+            "date": 1629187990409,
+            "name": "/Users/jun/2-Shorts/server/log/error/2021-08-17.log",
+            "hash": "20f16bdffcdf2303ca37816b8038471f"
+        },
+        {
+            "date": 1629269729376,
+            "name": "/Users/jun/2-Shorts/server/log/error/2021-08-18.log",
+            "hash": "f379ed1662f3ed2aa02e9a6511915552"
+        },
+        {
+            "date": 1629357602796,
+            "name": "/Users/jun/2-Shorts/server/log/error/2021-08-19.log",
+            "hash": "2f0a5717e805dd6b2fcdaf7778a5c528"
         }
     ]
 }

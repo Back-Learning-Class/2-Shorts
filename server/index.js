@@ -7,10 +7,12 @@ import dbSeq from "./src/models/sequelize.js"; // 시퀄라이저
 import cookieParser from "cookie-parser";
 
 //라우터 가져오기
+import status from "./src/api/routes/status.js";
 import getData from "./src/api/routes/getYoutube.js";
 import enrolluser from "./src/api/routes/enrollUser.js";
 import selectid from "./src/api/routes/selectId.js";
 import loginuser from "./src/api/routes/loginId.js";
+import logout from "./src/api/routes/logoutId.js";
 
 //import postUser from "./src/api/routes/user.js";
 
@@ -36,10 +38,12 @@ dbSeq.sequelize
     console.log(error);
   });
 
+app.use("/api/route/", status);
 app.use("/api/route/", getData);
 app.use("/api/route/", enrolluser);
 app.use("/api/route/", selectid);
 app.use("/api/route/", loginuser);
+app.use("/api/route/", logout);
 //app.use("/api/route/user", postUser);
 
 app.listen(PORT, () => {

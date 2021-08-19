@@ -9,21 +9,20 @@ dotenv.config();
 
 const router = express.Router();
 
-const KEY = "AIzaSyA2nJdF6tnRHzzHoJt-AtjbmWnxE_FuPXw";
+//const KEY = "AIzaSyA2nJdF6tnRHzzHoJt-AtjbmWnxE_FuPXw";
 
-//const KEY = "AIzaSyCEivncDEIHZwGKpdjtngDXx_-EhdVtJdQ";
+const KEY = "AIzaSyCEivncDEIHZwGKpdjtngDXx_-EhdVtJdQ";
 let option = {
   uri: "https://www.googleapis.com/youtube/v3/search",
   qs: {
-    part: "snippet", // snippet // id
-    eventType: "completed",
-    maxResults: 8,
-    order: "viewCount",
-    q: "#shorts",
-    regionCode: "KR",
+    part: "snippet", // snippet // id,
+    maxResults: 16,
+    //order: "relevance",
+    q: "##shorts",
+    //regionCode: "KR",
     type: "video",
-    videoDuration: "short",
-    videoSyndicated: "true",
+    //videoDuration: "short",
+    //videoSyndicated: "any",
     key: KEY
   },
   headers: {
@@ -45,14 +44,15 @@ router.get("/", async (req, res) => {
     titleResult.push(apiResult.items[i].snippet.title);
     thumbnailsResult.push(apiResult.items[i].snippet.thumbnails.high.url);
   }
-  console.log("idResult");
-  console.log(idResult);
+  //console.log("idResult");
+  //console.log(idResult);
 
-  console.log("titleResult");
-  console.log(titleResult);
+  //console.log("titleResult");
+  //console.log(titleResult);
 
-  console.log("thumbnailsResult");
-  console.log(thumbnailsResult);
+  //console.log("thumbnailsResult");
+  //console.log(thumbnailsResult);
+  console.log("cookie test main", req.cookies);
 
   res.status(200).json({
     idResult,

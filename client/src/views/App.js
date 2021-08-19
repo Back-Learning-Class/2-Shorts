@@ -3,7 +3,8 @@ import { Route, Switch } from "react-router-dom";
 import LoginPage from "./components/LoginPage/LoginPage.js";
 import MainPage from "./components/MainPage/MainPage.js";
 import NavBar from "./components/NavPage/NavPage.js";
-import SignupPage from "./components/SignupPage/SignupPage.js"
+import SignupPage from "./components/SignupPage/SignupPage.js";
+import Authpage from "../hoc/Auth.js";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route exact path="/" component={MainPage} />
           <Route exact path="/Login" component={LoginPage} />
           <Route exact path="/Signup" component={SignupPage} />
+          <Route exact path="/Auth" component={Authpage} />
         </Switch>
       </div>
     </Suspense>
