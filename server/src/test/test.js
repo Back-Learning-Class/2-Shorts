@@ -9,6 +9,11 @@ import getData from "../api/routes/getYoutube.js";
 import enrolluser from "../api/routes/enrollUser.js";
 import selectid from "../api/routes/selectId.js";
 import loginuser from "../api/routes/loginId.js";
+import { auth } from "../../middleware/auth.js"
+
+import cookieParser from "cookie-parser";
+
+
 
 const PORT = process.env.PORT || 5000;
 //서버 세팅
@@ -16,7 +21,7 @@ const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: false })); // 중첩된 객체표현 허용에 관한 옵션
 app.use(express.json());
-
+app.use(cookieParser());
 // ################################################################
 // 테스트 설정 
 // ################################################################
@@ -51,4 +56,11 @@ app.listen(PORT, () => {
 // ################################################################
 app.get("/test", async (req, res) => {
     res.render("testShow.ejs")
+})
+
+app.post("/cookie", auth, async(req, res) =>{
+    console.log(req.cookies);
+    res.send({
+      cookie : req.cookies
+    })
 })

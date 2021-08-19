@@ -113,6 +113,54 @@
             console.log(error);
           }
         }
+        function getCookie(name) {
+          var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+          return value? value[2] : null;
+        };
+
+
+
+        async function checkAuth() {
+          console.log("쿠키 테스트 ");
+          
+          var ckTestResult = document.getElementById("ckTestResult");
+          console.log(document.cookie);
+          console.log(document.cookie.w_auth);
+          
+          let w_auth = getCookie("w_auth");
+          console.log("w_auth : " + w_auth);
+          
+          //보내는 데이터 구성
+          var data = {
+            
+          } 
+
+           var url = "http://localhost:5000/cookie";
+
+          var dataInfo = { 
+            method : "POST", //메소드 반드시 지정해줘야 app.js 파일에서 찾을수 있음. 
+            body : JSON.stringify(data), //JSON 형태로 변환 
+            headers : { "Content-Type" : "application/json",
+                        //"set-cookie" : w_auth //타입지정 
+            } 
+          }; 
+          try {
+            const reqURL = await fetch(url,dataInfo); 
+            console.log("reqURL" + reqURL);
+            let result = await reqURL.json(); //JSON값 받아오기 
+            result = JSON.stringify(result) // String 변환 
+            console.log("result" + result);
+            
+            ckTestResult.innerHTML = result;
+
+          } catch (error) {
+            console.log(error);
+          }
+          
+
+
+
+        }
 
     </script>
   </head>
@@ -138,5 +186,11 @@
     password : <input id="loginPassword" type="text"></text><br>
     <button onclick="loginidTest()"> loginTest </button><br>
     <p id="loginTestResult" style="font-size: large;"></p>
+
+    <h2>Cookie Test - w_auth</h2>
+    <button onclick="checkAuth()"> authTest </button><br>
+    <p id="ckTestResult" style="font-size: large;"></p>
+
+
   </body>
 </html>

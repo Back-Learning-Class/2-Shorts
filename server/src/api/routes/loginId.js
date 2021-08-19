@@ -11,7 +11,7 @@ import { auth } from "../../../middleware/auth.js";
 import User from "../../models/userModel.js"; // 시퀄라이저 모델
 const router = express.Router();
 
-router.post("/reqLogin", auth, async (req, res) => {
+router.post("/reqLogin", async (req, res) => {
   logger.info("POST / ");
   try {
     const selectResult = await User.findAll({
@@ -25,10 +25,11 @@ router.post("/reqLogin", auth, async (req, res) => {
     if (selectResult.length != 0) {
       if (selectResult[0].dataValues.password === req.body.userPswd) {
         console.log("success 0");
+        // JWT 생성 
         let token = jwt.sign(selectResult[0].dataValues.email, "sEcReAt");
 
-        res.cookie("w_auth", token);
-        console.log("cookie test", req.cookies);
+        res.cookie("w_auth", token); 
+        console.log("cookie test", req.cookies); // undefined
         res.send({
           selectResult: 0,
           token: token

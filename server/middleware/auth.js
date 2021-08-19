@@ -2,10 +2,12 @@ import User from "../src/models/userModel.js";
 import jwt from "jsonwebtoken";
 
 let auth = (req, res, next) => {
-  let accessToken = req.cookies.w_auth;
-
-  jwt.verify(accessToken, "sEcReAt", function (err, decode) {
-    const findUser = User.findAll({
+  let accessToken = req.cookies.w_auth1;
+  console.log("auth - 쿠키 값 확인 ");
+  console.log(accessToken);
+  // JWT 검증 
+  jwt.verify(accessToken, "sEcReAt", async function (err, decode) {
+    const findUser = await User.findAll({
       attributes: ["email", "password"],
       where: {
         email: decode
