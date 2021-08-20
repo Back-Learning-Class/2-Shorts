@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
 
 function LoginPage(props) {
   /*return (
@@ -39,19 +40,23 @@ function LoginPage(props) {
     } else {
       // 서버 로그인 요청
       axios
-        .post("http://localhost:5000/api/route/reqLogin", {
-          userId: inId,
-          userPswd: inPswd
-        })
+        .post(
+          "http://localhost:5000/api/route/reqLogin",
+          {
+            userId: inId,
+            userPswd: inPswd
+          },
+          { withCredentials: true }
+        )
         .then(function (response) {
           // response
           // 아이디 or 비밀번호 틀렸을경우
-          console.log("ttest", response.data.loginResult);
-          if (response.data.loginResult === 1) {
+          console.log("ttest", response.data.selectResult);
+          if (response.data.selectResult === -1) {
             setLoginResult("아이디를 확인해주세요 !!!");
-          } else if (response.data.loginResult === 2) {
+          } else if (response.data.selectResult === -2) {
             setLoginResult("비밀번호를 확인해주세요 !!!");
-          } else if (response.data.loginResult === 0) {
+          } else if (response.data.selectResult === 0) {
             // 로그인 성공 >>> 창 닫기 >>> 부모창 리로드
             setLoginResult("성공");
             props.history.push("/");
@@ -100,4 +105,4 @@ function LoginPage(props) {
   );
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);

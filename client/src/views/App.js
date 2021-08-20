@@ -3,7 +3,8 @@ import { Route, Switch } from "react-router-dom";
 import LoginPage from "./components/LoginPage/LoginPage.js";
 import MainPage from "./components/MainPage/MainPage.js";
 import NavBar from "./components/NavPage/NavPage.js";
-import SignupPage from "./components/SignupPage/SignupPage.js"
+import SignupPage from "./components/SignupPage/SignupPage.js";
+import Hoc from "../hoc/Hoc.js";
 
 function App() {
   return (
@@ -11,9 +12,9 @@ function App() {
       <NavBar />
       <div style={{ paddingTop: "69px", minHeight: "calc(100vh - 80px)" }}>
         <Switch>
-          <Route exact path="/" component={MainPage} />
-          <Route exact path="/Login" component={LoginPage} />
-          <Route exact path="/Signup" component={SignupPage} />
+          <Route exact path="/" component={Hoc(MainPage, null)} />
+          <Route exact path="/Login" component={Hoc(LoginPage, false)} />
+          <Route exact path="/Signup" component={Hoc(SignupPage, false)} />
         </Switch>
       </div>
     </Suspense>

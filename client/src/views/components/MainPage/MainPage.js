@@ -16,14 +16,12 @@ function MainPage() {
 
   const getData = () => {
     axios
-      .get("http://localhost:5000/api/route/")
+      .get("http://localhost:5000/api/route/", { withCredentials: true })
       .then(response => {
         if (response.data) {
           setshortVideoid(response.data.idResult);
           setshortVideotitle(response.data.titleResult);
           setshortVideothum(response.data.thumbnailsResult);
-
-          console.log("123tett", shortVideoid);
         } else {
           alert("데이터를 가져오는데 실패 했습니다.");
         }
