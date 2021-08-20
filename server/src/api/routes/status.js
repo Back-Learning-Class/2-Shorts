@@ -2,7 +2,7 @@ import express from "express";
 import { auth } from "../../../middleware/auth.js";
 const router = express.Router();
 
-router.get("/auth", (req, res) => {
+router.get("/status", auth, (req, res) => {
   console.log("status test", req.cookies);
   res.json({
     isAuth: true,

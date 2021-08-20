@@ -52,7 +52,6 @@ router.get("/", async (req, res) => {
 
   //console.log("thumbnailsResult");
   //console.log(thumbnailsResult);
-  console.log("cookie test main", req.cookies);
 
   res.status(200).json({
     idResult,
