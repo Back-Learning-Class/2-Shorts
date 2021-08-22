@@ -1,0 +1,23 @@
+{
+    "development": {
+      "username": "admin",
+      "password": "adminadmin",
+      "database": "2Shorts",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    },
+    "test": {
+      "username": "admin",
+      "password": "adminadmin",
+      "database": "2Shorts",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    },
+    "production": {
+      "username": "admin",
+      "password": "adminadmin",
+      "database": "2Shorts",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    }
+  }
