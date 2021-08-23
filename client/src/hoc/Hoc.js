@@ -3,7 +3,11 @@ import axios from "axios";
 import { withRouter } from "react-router-dom";
 
 export default function (SpecificComponent, option, adminRoute = null) {
-  function Hoc() {
+  //option null => 아무나 출입이 가능한 페이지
+  //option true => 로그인한 유저만 출입이 가능한 페이지
+  //option false => 로그인한 유저는 출입 불가능한 페이지
+
+  function Hoc(props) {
     useEffect(() => {
       axios
         .get("http://localhost:5000/api/route/status", {
@@ -11,16 +15,24 @@ export default function (SpecificComponent, option, adminRoute = null) {
         })
         .then(response => {
           if (!response.data.isAuth) {
-            //props.history.push("/");
+            //로그인 안 한 상태
+            if (option) {
+              props.history.push("/login");
+            }
             console.log("autest  false", response.data.isAuth);
-            alert("실패");
+            //alert("실패");
           } else {
+            //로그인 한 상태
+            if (option === false) {
+              props.history.push("/");
+            }
             console.log("autest  true", response.data.isAuth);
-            alert("성공");
+            //alert("성공");
           }
         });
     }, []);
+
     return <SpecificComponent />;
   }
-  return Hoc;
+  return withRouter(Hoc);
 }
