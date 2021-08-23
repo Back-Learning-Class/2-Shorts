@@ -1,0 +1,5 @@
+src/config는 
+sequelize 마이그레이션 기능을 사용하기 위해 
+sequelize-cli db:migrate
+만들어진 폴더이며 하위 config.json 역시 마이그레이션을 위해 
+구성함.
