@@ -26,13 +26,19 @@ router.post("/reqLogin", async (req, res) => {
     if (selectResult.length != 0) {
       if (selectResult[0].dataValues.password === req.body.userPswd) {
         console.log("success 0");
-        let token = jwt.sign(selectResult[0].dataValues.email, "sEcReAt");
+        let token = jwt.sign(selectResult[0].dataValues.email, "sEcReAt", {
+          expiresIn: "1h"
+        });
+        //토큰 만료는 1시간
         await Token.create({
           user_id: selectResult[0].dataValues.id,
           token_value: token
         });
-        res.cookie("w_auth", token, { httpOnly: true });
-
+        res.cookie("w_auth", token, {
+          expires: Date.now() + 1 * 24 * 60 * 60 * 1000,
+          httpOnly: true
+        });
+        //쿠키 만료일은 1일
         console.log("cookie test", req.cookies);
         res.status(200).json({
           selectResult: 0,

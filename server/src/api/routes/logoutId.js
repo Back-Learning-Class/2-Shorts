@@ -18,6 +18,7 @@ router.get("/logout", auth, async (req, res) => {
     (err, doc) => {
       if (err) return res.json({ success: false, err });
     };
+  res.clearCookie("w_auth");
   return res.status(200).json({ isAuth: true });
   //console.log("back logout test", findUser.dataValues.id);
 });
