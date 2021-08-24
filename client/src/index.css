@@ -18,12 +18,12 @@ code {
   margin : 60px;
   float: center;
   background-color: aquamarine;
-  
 }
 
 .SignupPage {
-  text-align:center; 
-  margin : 30px;
+
   float: center;
+  width: 500px;
+  margin : 30px;
   background-color: #BEEFFF;
 }

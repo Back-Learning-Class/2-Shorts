@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 
+import { Input } from 'antd';
+
 function LoginPage(props) {
   /*return (
     <div className="LoginPage">
@@ -77,18 +79,19 @@ function LoginPage(props) {
   // Signup 페이지 호출
   function callSignup() {
     // 부모창 (메인페이지 ) Signup 페이지로 전환
+    props.history.push("/signup");
 
     return;
   }
 
   return (
-    <div className="LoginPage">
-      <div className="InputId">
-        id (email) :{" "}
-        <input id="inputId" type="email" onChange={ifChange}></input>
+    <div className="LoginPage" style={ {margin: '90px auto' }}>
+      <div className="InputId" >
+        <h3>ID (Email) :{" "}</h3>
+        <Input placeholder="email" id="inputId" type="email" onChange={ifChange}/>
         <br />
-        password :{" "}
-        <input id="inputPswd" type="password" onChange={ifChange}></input>
+        <h3>Password :{" "}</h3>
+        <Input placeholder="password" id="inputPswd" type="password" onChange={ifChange}/>
         <br />
         <span style={{ color: "red" }}>{loginResult}</span>
         <br />
@@ -96,9 +99,10 @@ function LoginPage(props) {
           {"Login"}
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <button type="button" onClick={chkForm}>
+        <button type="button" onClick={callSignup}>
           {"Sign up"}
         </button>
+        <br />
         <br />
       </div>
     </div>

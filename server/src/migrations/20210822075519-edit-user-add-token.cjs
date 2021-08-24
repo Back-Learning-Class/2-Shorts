@@ -10,7 +10,9 @@ module.exports = {
      */
     
     // password 칼럼 자료형 변경 
-    await queryInterface.changeColumn('user', 'password', {type: Sequelize.STRING(100)})
+    await queryInterface.changeColumn('user', 'password', {
+      type: Sequelize.STRING(100)
+    })
     .then( async function (){
       // 테이블 생성 
       await queryInterface.createTable('token', {
@@ -22,7 +24,9 @@ module.exports = {
         },
         user_id : {
           type : Sequelize.INTEGER, // 자료형 
-          references:{model: 'user', key: 'id'}, // 외래키 설정 
+          references:{
+            model: 'user', key: 'id'
+          }, // 외래키 설정 
           onDelete: 'CASCADE',
           onUpdate: 'CASCADE'
         },

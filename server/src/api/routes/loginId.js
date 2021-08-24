@@ -4,6 +4,7 @@ import { logger } from "../../../config/winston.js"; //로거
 import jwt from "jsonwebtoken";
 import { auth } from "../../../middleware/auth.js";
 import moment from "moment-timezone";
+import { doCompare } from "../../encoder/encoder.js" // 암호화 모듈 
 // 시퀄라이저 적용 전
 // import model from "../../models/user.js"; // user 객체
 // import User from "../../models/user.js";
@@ -24,7 +25,12 @@ router.post("/reqLogin", async (req, res) => {
 
     // 성공 0 // id 없음 : -1 // 비밀번호 틀림 : -2 // 에러 -3
     if (selectResult.length != 0) {
-      if (selectResult[0].dataValues.password === req.body.userPswd) {
+      
+      // 암호화 비밀번호 비교
+      let compareResult = await doCompare(req.body.userPswd, selectResult[0].dataValues.password);
+      console.log( "compareResult : "+ compareResult);
+    
+      if (compareResult === true) {
         console.log("success 0");
         let token = jwt.sign(selectResult[0].dataValues.email, "sEcReAt");
         let tokenExp = moment().add(1, "hour").valueOf();
