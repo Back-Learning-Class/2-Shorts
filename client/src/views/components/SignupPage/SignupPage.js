@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Input } from 'antd';
+import { Link } from "react-router-dom";
+
+
 
 function SignupPage() {
   return (
@@ -215,37 +219,56 @@ function InputForm() {
           // 항상 실행
         });
     }
+
+      // Signup 버튼 클릭시
+      // Signup 페이지 호출
+      function callSignup() {
+        // 부모창 (메인페이지 ) Signup 페이지로 전환
+        //props.history.push("/signup");
+      
+        return;
+      }
   }
 
   return (
-    <div className="InputFom">
-      id (email) : <input id="inputId" type="email" onChange={ifChange}></input>
-      &nbsp;&nbsp;
-      <button type="button" onClick={selectId}>
-        {"중복확인"}
-      </button>
-      <br />
-      <span style={alertColor}>{idChkResult}</span>
-      <br />
-      password :{" "}
-      <input id="inputPassword" type="password" onChange={ifChange}></input>
-      <br />
-      <span style={{ color: "red" }}>{pswdChkResult}</span>
-      (최소 8자리 이상) <br />
-      (영어, 숫자, 특수문자 중 2종류 조합)
-      <br /> <br />
-      name : <input id="inputName" type="text" onChange={ifChange}></input>
-      <br />
-      <span style={{ color: "red" }}>{nameChkResult}</span>
-      <br />
-      <br />
-      <span style={{ color: "red" }}>{resultEnroll}</span>
-      <br />
-      <button type="button" onClick={chkForm}>
-        {"Enroll"}
-      </button>
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <button type="button">{"Cancle"}</button>
+    <div className="InputFom" style={ {margin: '10px auto' }}>
+      <div style={ {marginLeft : '20px' }}>
+        <h1>회원가입</h1>
+        <br />
+        <br />
+        <h2>Id (Email) : </h2>
+
+        <Input id="inputId" placeholder="email" type="email" onChange={ifChange} style={{width: 200}}/>
+        &nbsp;&nbsp;
+        <button type="button" onClick={selectId}>
+          {"중복확인"}
+        </button>
+        <br />
+        <span style={alertColor}>{idChkResult}</span>
+        <br />
+        <h2>Password :{" "}</h2>
+        <Input id="inputPassword" type="password" onChange={ifChange} style={{width: 200}}/>
+        <br />
+        <span style={{ color: "red" }}>{pswdChkResult}</span>
+        ***(최소 8자리 이상) <br />
+        ***(영어, 숫자, 특수문자 중 2종류 조합)
+        <br /> <br />
+        <h2>Name : </h2>
+        <Input id="inputName" type="text" onChange={ifChange} style={{width: 200}}/>
+        <br />
+        <span style={{ color: "red" }}>{nameChkResult}</span>
+        <br />
+        <br />
+        <span style={{ color: "red" }}>{resultEnroll}</span>
+        <br />
+        <button type="button" onClick={chkForm}>
+          {"Enroll"}
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <Link to="/">
+          <button type="button" style={{color : "black" }}>{"Cancle"}</button>
+        </Link>
+        </div>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import express from "express";
 
 // 시퀄라이저 사용 이후
 import User from "../../models/userModel.js"; // 시퀄라이저 모델
+import { doEncode } from "../../encoder/encoder.js" // 암호화 모듈 
 
 import { logger } from "../../../config/winston.js"; //로거
 
@@ -13,23 +14,34 @@ const router = express.Router();
 router.post("/enrollUser", async (req, res) => {
   logger.info("POST / ");
   try {
-    const insertResult = await User.create({
-      // id : 아이디는 자동으로 증가되어 들어감
-      email: req.body.enrollId,
-      password: req.body.enrollPswd,
-      name: req.body.enrollName,
-      admin: 0
-    });
-    if (insertResult.dataValues) {
-      console.log("회원 등록 정보 ");
-      console.log(insertResult.dataValues);
-      res.send({
-        enrollResult: 0 // 등록성공 : 0 , 실패 : -1 , 에러 : -2
+    // 비밀번호 해싱 
+    let hash = await doEncode(req.body.enrollPswd);
+    if (hash)
+    {
+      // DB INSERT
+      const insertResult = await User.create({
+        // id : 아이디는 자동으로 증가되어 들어감
+        email: req.body.enrollId,
+        password: hash,
+        name: req.body.enrollName,
+        admin: 0
       });
-    } else {
-      console.log("회원 등록 실패!!! ");
+      if (insertResult.dataValues) {
+        console.log("회원 등록 정보 ");
+        console.log(insertResult.dataValues);
+        res.send({
+          enrollResult: 0 // 등록성공 : 0 , 실패 : -1 , 에러 : -2
+        });
+      } else {
+        console.log("회원 등록 실패!!! ");
+        res.send({
+          enrollResult: -1 // 등록성공 : 0 , 실패 : -1 , 에러 : -2
+        });
+      }
+    }
+    else {
       res.send({
-        enrollResult: -1 // 등록성공 : 0 , 실패 : -1 , 에러 : -2
+        enrollResult: -2 // 등록성공 : 0 , 실패 : -1 , 에러 : -2
       });
     }
   } catch (error) {
