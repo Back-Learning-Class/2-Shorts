@@ -8,29 +8,27 @@ let auth = (req, res, next) => {
   console.log("accesstoken", accessToken);
   if (accessToken) {
     jwt.verify(accessToken, "sEcReAt", async function (err, decode) {
-      let finduser = await User.findAll({
-        attributes: ["email"],
-        where: {
-          email: decode
-        }
-      });
-      if (err) throw err;
-      if (finduser[0].dataValues.email != decode) {
-        return res.json({
-          isAuth: false,
-          error: true
+      try {
+        let finduser = await User.findAll({
+          attributes: ["email"],
+          where: {
+            email: decode
+          }
         });
+        if (finduser[0].dataValues.email != decode) {
+          return res.json({
+            isAuth: false,
+            error: true
+          });
+        }
+
+        req.user = decode;
+        console.log("middle auth", req.user);
+        next(); //next를 해줘야  라우터에 다음 부분들을 실행시켜줌
+      } catch (error) {
+        console.log("에러발생 : moddieware /auth", error);
       }
-      req.token = accessToken;
-      req.user = finduser[0].dataValues.email;
-      next(); //next를 해줘야  라우터에 다음 부분들을 실행시켜줌
     });
-  } else {
-    res.json({
-      isAuth: false,
-      error: true
-    });
-    //next();
   }
 };
 

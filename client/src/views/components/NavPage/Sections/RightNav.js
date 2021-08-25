@@ -17,14 +17,17 @@ function RightNav(props) {
   }, [Access]);
 
   const logoutHandler = () => {
-    axios.get("http://localhost:5000/api/route/logout").then(response => {
-      if (response.status === 200) {
-        console.log("logout test", response.data.isAuth);
-        props.history.push("/login");
-      } else {
-        alert("Log Out Failed");
-      }
-    });
+    axios
+      .get("http://localhost:5000/api/route/logout", { withCredentials: true })
+      .then(response => {
+        console.log("logouttest");
+        if (response.status === 200) {
+          console.log("logout test", response.data.isAuth);
+          props.history.push("/login");
+        } else {
+          alert("Log Out Failed");
+        }
+      });
   };
 
   if (!Access) {
