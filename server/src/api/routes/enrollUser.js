@@ -5,7 +5,7 @@ import express from "express";
 
 // 시퀄라이저 사용 이후
 import User from "../../models/userModel.js"; // 시퀄라이저 모델
-import { doEncode } from "../../encoder/encoder.js" // 암호화 모듈 
+import { doEncode } from "../../encoder/encoder.js"; // 암호화 모듈
 
 import { logger } from "../../../config/winston.js"; //로거
 
@@ -14,10 +14,9 @@ const router = express.Router();
 router.post("/enrollUser", async (req, res) => {
   logger.info("POST / ");
   try {
-    // 비밀번호 해싱 
+    // 비밀번호 해싱
     let hash = await doEncode(req.body.enrollPswd);
-    if (hash)
-    {
+    if (hash) {
       // DB INSERT
       const insertResult = await User.create({
         // id : 아이디는 자동으로 증가되어 들어감
@@ -38,8 +37,7 @@ router.post("/enrollUser", async (req, res) => {
           enrollResult: -1 // 등록성공 : 0 , 실패 : -1 , 에러 : -2
         });
       }
-    }
-    else {
+    } else {
       res.send({
         enrollResult: -2 // 등록성공 : 0 , 실패 : -1 , 에러 : -2
       });
