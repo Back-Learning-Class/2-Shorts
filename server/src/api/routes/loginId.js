@@ -2,21 +2,21 @@ import express from "express";
 import * as service from "../../services/userService.js"; // db 처리 서비스
 import { logger } from "../../../config/winston.js"; //로거
 import jwt from "jsonwebtoken";
-import { auth } from "../../../middleware/auth.js";
-import moment from "moment-timezone";
+
 // 시퀄라이저 적용 전
 // import model from "../../models/user.js"; // user 객체
 // import User from "../../models/user.js";
 
 // 시퀄라이저 적용 후
 import User from "../../models/userModel.js"; // 시퀄라이저 모델
+import Token from "../../models/tokenModel.js";
 const router = express.Router();
 
 router.post("/reqLogin", async (req, res) => {
   logger.info("POST / ");
   try {
     const selectResult = await User.findAll({
-      attributes: ["email", "password"],
+      attributes: ["email", "password", "id"],
       where: {
         email: req.body.userId
       }
@@ -26,11 +26,19 @@ router.post("/reqLogin", async (req, res) => {
     if (selectResult.length != 0) {
       if (selectResult[0].dataValues.password === req.body.userPswd) {
         console.log("success 0");
-        let token = jwt.sign(selectResult[0].dataValues.email, "sEcReAt");
-        let tokenExp = moment().add(1, "hour").valueOf();
-
-        res.cookie("w_auth", token, { httpOnly: true });
-        res.cookie("w_authExp", tokenExp, { httpOnly: true });
+        let token = jwt.sign(selectResult[0].dataValues.email, "sEcReAt", {
+          expiresIn: "1h"
+        });
+        //토큰 만료는 1시간
+        await Token.create({
+          user_id: selectResult[0].dataValues.id,
+          token_value: token
+        });
+        res.cookie("w_auth", token, {
+          expires: Date.now() + 1 * 24 * 60 * 60 * 1000,
+          httpOnly: true
+        });
+        //쿠키 만료일은 1일
         console.log("cookie test", req.cookies);
         res.status(200).json({
           selectResult: 0,

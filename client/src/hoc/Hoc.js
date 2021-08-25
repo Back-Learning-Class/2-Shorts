@@ -30,7 +30,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
             //alert("성공");
           }
         });
-    }, []);
+    }, [option]);
 
     return <SpecificComponent />;
   }
