@@ -44,8 +44,9 @@ router.get("/", async (req, res) => {
     titleResult.push(apiResult.items[i].snippet.title);
     thumbnailsResult.push(apiResult.items[i].snippet.thumbnails.high.url);
   }
+
   //console.log("idResult");
-  //console.log(idResult);
+  //console.log("get test", videoResult);
 
   //console.log("titleResult");
   //console.log(titleResult);
