@@ -76,6 +76,7 @@ async function reMkToken(tokenId, expiresIn, cookieName) {
 let auth = (req, res, next) => {
   let accessToken = req.cookies.w_auth;
   let refreshToken = req.cookies.refresh_auth;
+
   //let test = req.header.cookie;
   //클라이언트 쿠키에서 토큰을 가져온다
 
@@ -83,7 +84,10 @@ let auth = (req, res, next) => {
   if (userToken === false) {
     // 유저의 토큰이 불명확
     // 유저의 토큰이 아닐 확률이 높음
-    res.redirect("/");
+    res.json({
+      isAuth: false,
+      error: true
+    });
     next();
   }
 
@@ -94,12 +98,13 @@ let auth = (req, res, next) => {
   if (accTokenVrfy === null) {
     // or null
     // 1-1. refresh 토큰이 만료된경우
-    res.redirect("/");
-    next();
     if (reTokenVrfy === null) {
       // or null
       // 로그인 페이지로 이동
-      res.redirect("/");
+      res.json({
+        isAuth: false,
+        error: true
+      });
       next();
     }
     // 1-2. refresh 토큰이 유효한 경우
@@ -107,18 +112,20 @@ let auth = (req, res, next) => {
       //이메일이 들어가야됨
       //accestoken 이면 1시간 refresh 면 1주일
       // access 토큰 재발급
-      reMkToken(accTokenVrfy, "1h", "w_auth");
+      reMkToken(accTokenVrfy, "5m", "w_auth");
+      next();
     }
   }
   // 2. access 토큰이 유효한 경우
   else {
+    req.user = accTokenVrfy.tokenId;
     // 2-1. refresh 토큰이 만료된 경우
     if (reTokenVrfy === null) {
       // or null
       // 방법 1. 이경우 그냥 next 처리를 한 뒤
       // 사용자가 로그인을 다시 진행할때 refresh 토큰을 발급한다.
-      reMkToken(reTokenVrfy, "7d", "refresh_auth");
-      next();
+      reMkToken(reTokenVrfy, "7d", "refresh_auth"); //방법 2
+      //next(); //이게 방법 1
 
       // 방법 2. refresh 토큰 역시 재발급 하여 사용자가 이용하는 동안 계속해서
       // 토큰이 유지되도록 한다 (사용자가 원한다면 무한정 )

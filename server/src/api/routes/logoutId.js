@@ -6,6 +6,7 @@ import User from "../../models/userModel.js";
 const router = express.Router();
 
 router.get("/logout", auth, async (req, res) => {
+  console.log("loguuset", req.user);
   const findUser = await User.findOne({
     where: { email: req.user },
     attributes: ["id"]

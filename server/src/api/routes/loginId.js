@@ -38,7 +38,7 @@ router.post("/reqLogin", async (req, res) => {
           { tokenId: selectResult[0].dataValues.email },
           "sEcReAt",
           {
-            expiresIn: "1h",
+            expiresIn: "5m",
             issuer: "2Shorts"
           }
         );
