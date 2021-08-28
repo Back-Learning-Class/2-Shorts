@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Input } from 'antd';
+import { Input } from "antd";
 import { Link } from "react-router-dom";
-
-
 
 function SignupPage() {
   return (
@@ -28,7 +26,7 @@ function InputForm() {
   let [inName, setInName] = useState("");
   const [nameLength, setNameLength] = useState(20); // 이름 최대 길이
 
-  let [sltIdResult, setSltIdResult] = useState(0); // id 조회 결과
+  let [SltIdResult, setSltIdResult] = useState(0); // id 조회 결과
   // 0 : 중복검사 미실시
   // 1 : 중복
   // 2 : 중복없음 >>> 가능
@@ -45,6 +43,8 @@ function InputForm() {
   let [alertColor, setAlertColor] = useState({ color: "red" });
 
   let [resultEnroll, setResultEnroll] = useState("");
+
+  //let [chkResult, setchkResult] = useState(0)
 
   // input 값 state에 즉시 반영
   function ifChange(e) {
@@ -64,7 +64,7 @@ function InputForm() {
   function selectId() {
     setAlertColor({ color: "red" });
     setIdChkResult("");
-    setSltIdResult(0);
+    //setSltIdResult(0);
     var mail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     var mailResult = mail.test(inId);
     // 형식에 맞는경우 true
@@ -87,17 +87,16 @@ function InputForm() {
       })
       .then(function (response) {
         // response
-        if (response.selectResult === 0) {
+        if (response.data.selectResult === -1) {
           // 중복
           setIdChkResult("이미 등록된 계정입니다 !!!");
-          setSltIdResult(1); // 중복검사 후 중복발생
-        } else if (response.selectResult === -1) {
+          setSltIdResult(0); // 중복검사 후 중복발생
+        } else if (response.data.selectResult === 0) {
           // 중복 없음 >>> 사용가능
           setAlertColor({ color: "blue" });
           setIdChkResult("사용가능 !!!");
           setSltIdResult(2); // 중복검사 후 사용가능
-        }
-        else if (response.selectResult === -2) {
+        } else if (response.data.selectResult === -2) {
           setAlertColor({ color: "red" });
           setIdChkResult("조회 중 에러 발생 !!!\n다시 시도해주세요 !!!");
           setSltIdResult(1); // 중복검사 중 에러발생
@@ -110,7 +109,7 @@ function InputForm() {
       .then(function () {
         // 항상 실행
       });
-
+    console.log("chkid", SltIdResult);
     return;
   }
 
@@ -152,13 +151,14 @@ function InputForm() {
 
   // db 등록 전 최종양식검사
   function chkForm() {
+    console.log("chktest", SltIdResult);
     var chkResult = 0; // 검사 결과 // 초기값 0 전체 성공시 1
     setIdChkResult("");
     setPswdChkResult("");
     setNameChkResult("");
     setResultEnroll("");
 
-    if (sltIdResult === 0) {
+    if (SltIdResult === 0) {
       // id 중복검사 미실시
       setAlertColor({ color: "red" });
       setIdChkResult("중복검사를 실시해주세요.");
@@ -167,11 +167,9 @@ function InputForm() {
     }
 
     var pswdResult = chkPswd(); // 비밀번호 검사
-    if (sltIdResult === 1) {
+    if (SltIdResult === 1) {
       // id 중복 문제 미해결
-      setIdChkResult(
-        "중복검사를 다시 실시해주세요."
-      );
+      setIdChkResult("중복검사를 다시 실시해주세요.");
       chkResult = 1;
       return;
     } else if (inName.length === 0) {
@@ -191,7 +189,7 @@ function InputForm() {
     }
 
     // 회원가입등록처리
-    if (chkResult === 1) {
+    if (chkResult === 0) {
       // 서버에 등록 요청
       axios
         .post("http://localhost:5000/api/route/enrollUser/", {
@@ -220,25 +218,30 @@ function InputForm() {
         });
     }
 
-      // Signup 버튼 클릭시
-      // Signup 페이지 호출
-      function callSignup() {
-        // 부모창 (메인페이지 ) Signup 페이지로 전환
-        //props.history.push("/signup");
-      
-        return;
-      }
+    // Signup 버튼 클릭시
+    // Signup 페이지 호출
+    function callSignup() {
+      // 부모창 (메인페이지 ) Signup 페이지로 전환
+      //props.history.push("/signup");
+
+      return;
+    }
   }
 
   return (
-    <div className="InputFom" style={ {margin: '10px auto' }}>
-      <div style={ {marginLeft : '20px' }}>
+    <div className="InputFom" style={{ margin: "10px auto" }}>
+      <div style={{ marginLeft: "20px" }}>
         <h1>회원가입</h1>
         <br />
         <br />
         <h2>Id (Email) : </h2>
-
-        <Input id="inputId" placeholder="email" type="email" onChange={ifChange} style={{width: 200}}/>
+        <Input
+          id="inputId"
+          placeholder="email"
+          type="email"
+          onChange={ifChange}
+          style={{ width: 200 }}
+        />
         &nbsp;&nbsp;
         <button type="button" onClick={selectId}>
           {"중복확인"}
@@ -246,15 +249,25 @@ function InputForm() {
         <br />
         <span style={alertColor}>{idChkResult}</span>
         <br />
-        <h2>Password :{" "}</h2>
-        <Input id="inputPassword" type="password" onChange={ifChange} style={{width: 200}}/>
+        <h2>Password : </h2>
+        <Input
+          id="inputPassword"
+          type="password"
+          onChange={ifChange}
+          style={{ width: 200 }}
+        />
         <br />
         <span style={{ color: "red" }}>{pswdChkResult}</span>
         ***(최소 8자리 이상) <br />
         ***(영어, 숫자, 특수문자 중 2종류 조합)
         <br /> <br />
         <h2>Name : </h2>
-        <Input id="inputName" type="text" onChange={ifChange} style={{width: 200}}/>
+        <Input
+          id="inputName"
+          type="text"
+          onChange={ifChange}
+          style={{ width: 200 }}
+        />
         <br />
         <span style={{ color: "red" }}>{nameChkResult}</span>
         <br />
@@ -266,9 +279,11 @@ function InputForm() {
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <Link to="/">
-          <button type="button" style={{color : "black" }}>{"Cancle"}</button>
+          <button type="button" style={{ color: "black" }}>
+            {"Cancle"}
+          </button>
         </Link>
-        </div>
+      </div>
     </div>
   );
 }
