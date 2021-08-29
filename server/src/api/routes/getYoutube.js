@@ -9,9 +9,9 @@ dotenv.config();
 
 const router = express.Router();
 
-const KEY = "AIzaSyA2nJdF6tnRHzzHoJt-AtjbmWnxE_FuPXw";
+//const KEY = "AIzaSyA2nJdF6tnRHzzHoJt-AtjbmWnxE_FuPXw";
 
-//const KEY = "AIzaSyCEivncDEIHZwGKpdjtngDXx_-EhdVtJdQ";
+const KEY = "AIzaSyCEivncDEIHZwGKpdjtngDXx_-EhdVtJdQ";
 let option = {
   uri: "https://www.googleapis.com/youtube/v3/search",
   qs: {

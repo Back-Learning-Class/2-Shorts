@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Card, Row } from "antd";
 import axios from "axios";
 import Meta from "antd/lib/card/Meta";
+import ModalVideo from "./Sections/VideoModal.js";
 
 function MainPage() {
   const [shortVideoid, setshortVideoid] = useState([]);
@@ -42,7 +43,11 @@ function MainPage() {
               />
             }
           >
-            <Meta title={shortVideotitle[index]} />
+            <ModalVideo
+              videoId={shortVideoid[index]}
+              title={shortVideotitle[index]}
+            />
+            {/*<Meta title={shortVideotitle[index]} />*/}
           </Card>
         </Col>
       );

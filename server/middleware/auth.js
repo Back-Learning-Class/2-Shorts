@@ -38,15 +38,15 @@ async function ckUserToken(accessToken, refreshToken) {
 }
 
 // access 토큰 유효성 검사
-function tokenCheck(Token) {
+function tokenCheck(Tokens) {
   try {
     // 유효성 검사
-    let access = jwt.verify(Token, "sEcReAt");
+    let access = jwt.verify(Tokens, "sEcReAt");
+    console.log("ttests tst", access);
     return access; // 검사 결과 리턴
   } catch (error) {
     // 유효성 검사 실패 시 : 에러발생
-    console.log("토큰 유효성 검사 에러 발생 !!!");
-    console.log(error);
+    console.log("토큰 유효성 검사 에러 발생 !!!", error);
     return null; // 실패시 리턴값
   }
 }
@@ -66,11 +66,12 @@ async function reMkToken(tokenId, expiresIn, cookieName) {
       attributes: ["id"]
     });
     await Token.create({
-      user_ud: finduserMK.dataValues.id,
+      user_id: finduserMK.dataValues.id,
       token_value: newToken
     });
   }
-  res.cookie(cookieName, newToken);
+  return newToken;
+  //res.cookie(cookieName, newToken);
 }
 
 let auth = (req, res, next) => {
@@ -80,64 +81,75 @@ let auth = (req, res, next) => {
   //let test = req.header.cookie;
   //클라이언트 쿠키에서 토큰을 가져온다
 
-  const userToken = ckUserToken(accessToken, refreshToken);
-  if (userToken === false) {
-    // 유저의 토큰이 불명확
-    // 유저의 토큰이 아닐 확률이 높음
+  //클라이언트에 해당 쿠키가 없을 시
+  if (accessToken === undefined || refreshToken === undefined) {
     res.json({
       isAuth: false,
       error: true
     });
     next();
-  }
-
-  const accTokenVrfy = tokenCheck(accessToken); // access token 유효성검사 실시
-  const reTokenVrfy = tokenCheck(refreshToken); // refresh token 유효성 검사 실시
-
-  // 1. access 토큰 이 만룓된경우
-  if (accTokenVrfy === null) {
-    // or null
-    // 1-1. refresh 토큰이 만료된경우
-    if (reTokenVrfy === null) {
-      // or null
-      // 로그인 페이지로 이동
+  } else {
+    const userToken = ckUserToken(accessToken, refreshToken);
+    if (userToken === false) {
+      // 유저의 토큰이 불명확
+      // 유저의 토큰이 아닐 확률이 높음
       res.json({
         isAuth: false,
         error: true
       });
       next();
     }
-    // 1-2. refresh 토큰이 유효한 경우
-    else {
-      //이메일이 들어가야됨
-      //accestoken 이면 1시간 refresh 면 1주일
-      // access 토큰 재발급
-      reMkToken(accTokenVrfy, "5m", "w_auth");
-      next();
-    }
-  }
-  // 2. access 토큰이 유효한 경우
-  else {
-    req.user = accTokenVrfy.tokenId;
-    // 2-1. refresh 토큰이 만료된 경우
-    if (reTokenVrfy === null) {
-      // or null
-      // 방법 1. 이경우 그냥 next 처리를 한 뒤
-      // 사용자가 로그인을 다시 진행할때 refresh 토큰을 발급한다.
-      reMkToken(reTokenVrfy, "7d", "refresh_auth"); //방법 2
-      //next(); //이게 방법 1
 
-      // 방법 2. refresh 토큰 역시 재발급 하여 사용자가 이용하는 동안 계속해서
-      // 토큰이 유지되도록 한다 (사용자가 원한다면 무한정 )
-      // >>> 이방법이 옳은것인진 모르겟음
-      /***
-       *  필요시  로직 추가
-       *  reMkToken()
-       */
+    const accTokenVrfy = tokenCheck(accessToken); // access token 유효성검사 실시
+    const reTokenVrfy = tokenCheck(refreshToken); // refresh token 유효성 검사 실시
+    // 1. access 토큰 이 만룓된경우
+    if (accTokenVrfy === null) {
+      // or null
+      // 1-1. refresh 토큰이 만료된경우
+      if (reTokenVrfy === null) {
+        // or null
+        // 로그인 페이지로 이동
+        res.json({
+          isAuth: false,
+          error: true
+        });
+        next();
+      }
+      // 1-2. refresh 토큰이 유효한 경우
+      else {
+        //이메일이 들어가야됨
+        //accestoken 이면 1시간 refresh 면 1주일
+        // access 토큰 재발급
+        res.cookie("w_auth", reMkToken(accTokenVrfy, "5m", "w_auth"));
+        next();
+      }
     }
-    // 2-2. refresh 토큰이 유효한 경우
+    // 2. access 토큰이 유효한 경우
     else {
-      next();
+      req.user = accTokenVrfy.tokenId;
+      // 2-1. refresh 토큰이 만료된 경우
+      if (reTokenVrfy === null) {
+        // or null
+        // 방법 1. 이경우 그냥 next 처리를 한 뒤
+        // 사용자가 로그인을 다시 진행할때 refresh 토큰을 발급한다.
+        res.cookie(
+          "refresh_auth",
+          reMkToken(reTokenVrfy, "7d", "refresh_auth")
+        ); //방법 2
+        //next(); //이게 방법 1
+
+        // 방법 2. refresh 토큰 역시 재발급 하여 사용자가 이용하는 동안 계속해서
+        // 토큰이 유지되도록 한다 (사용자가 원한다면 무한정 )
+        // >>> 이방법이 옳은것인진 모르겟음
+        /***
+         *  필요시  로직 추가
+         *  reMkToken()
+         */
+      }
+      // 2-2. refresh 토큰이 유효한 경우
+      else {
+        next();
+      }
     }
   }
 };
