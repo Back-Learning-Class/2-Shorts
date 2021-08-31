@@ -16,17 +16,15 @@ export default function (SpecificComponent, option, adminRoute = null) {
         .then(response => {
           if (!response.data.isAuth) {
             //로그인 안 한 상태
-            if (option) {
-              props.history.push("/login");
-            }
+
             console.log("autest  false", response.data.isAuth);
+
             //alert("실패");
           } else {
             //로그인 한 상태
-            if (option === false) {
-              props.history.push("/");
-            }
+
             console.log("autest  true", response.data.isAuth);
+
             //alert("성공");
           }
         });
