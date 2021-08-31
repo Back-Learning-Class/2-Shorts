@@ -54,6 +54,16 @@
             "date": 1630228766205,
             "name": "/Users/jun/2-Shorts/server/log/error/2021-08-29.log",
             "hash": "0f5a301e07bd6b0c3801b042f68dcf2a"
+        },
+        {
+            "date": 1630308893899,
+            "name": "/Users/jun/2-Shorts/server/log/error/2021-08-30.log",
+            "hash": "1c3aff5fcc7a244a03e80cd63c5d1e18"
+        },
+        {
+            "date": 1630338568538,
+            "name": "/Users/jun/2-Shorts/server/log/error/2021-08-31.log",
+            "hash": "2583b0e3d50ae29fbc57fa47cf41bfa4"
         }
     ]
 }
