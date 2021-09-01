@@ -1,20 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Menu } from "antd";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function RightNav(props) {
-  const [Access, setAccess] = useState("");
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/route/status", {
-        withCredentials: true
-      })
-      .then(response => {
-        setAccess(response.data.isAuth);
-      });
-  }, [Access]);
+  const user = useSelector(state => state.user);
 
   const logoutHandler = () => {
     axios
@@ -30,7 +21,8 @@ function RightNav(props) {
       });
   };
 
-  if (!Access) {
+  if (user.userData && !user.userData.isAuth) {
+    //redux 스토어 에서 값을 가져와 로그인 한 상태인지 찾는다
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="mail">
@@ -42,6 +34,7 @@ function RightNav(props) {
       </Menu>
     );
   } else {
+    //로그인 한 상태면
     return (
       <Menu>
         <Menu.Item key="logout">

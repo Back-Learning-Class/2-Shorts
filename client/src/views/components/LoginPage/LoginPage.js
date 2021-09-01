@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { withRouter } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../../_actions/user_action.js";
 
-import { Input } from 'antd';
+import { Input } from "antd";
 
 function LoginPage(props) {
+  const dispatch = useDispatch();
   /*return (
     <div className="LoginPage">
       <br />
@@ -41,33 +43,30 @@ function LoginPage(props) {
       return;
     } else {
       // 서버 로그인 요청
-      axios
-        .post(
-          "http://localhost:5000/api/route/reqLogin",
-          {
-            userId: inId,
-            userPswd: inPswd
-          },
-          { withCredentials: true }
-        )
-        .then(function (response) {
-          // response
-          // 아이디 or 비밀번호 틀렸을경우
-          console.log("ttest", response.data.selectResult);
-          if (response.data.selectResult === -1) {
-            setLoginResult("아이디를 확인해주세요 !!!");
-          } else if (response.data.selectResult === -2) {
-            setLoginResult("비밀번호를 확인해주세요 !!!");
-          } else if (response.data.selectResult === 0) {
-            // 로그인 성공 >>> 창 닫기 >>> 부모창 리로드
-            setLoginResult("성공");
-            props.history.push("/");
-          }
-        })
-        .catch(function (error) {
+      let body = {
+        userId: inId,
+        userPswd: inPswd
+      };
+      dispatch(loginUser(body)).then(response => {
+        if (response.payload.selectResult === -1) {
+          setLoginResult("아이디를 확인해주세요 !!!");
+        } else if (response.payload.selectResult === -2) {
+          setLoginResult("비밀번호를 확인해주세요 !!!");
+        } else if (response.payload.selectResult === 0) {
+          // 로그인 성공 >>> 창 닫기 >>> 부모창 리로드
+          setLoginResult("성공");
+          console.log("성공", response.payload);
+          props.history.push("/");
+        }
+      });
+
+      // response
+      // 아이디 or 비밀번호 틀렸을경우
+
+      /* .catch(function (error) {
           // 오류발생시 실행
           setLoginResult("로그인 오류 다시 시도해주세요!!!\n" + error);
-        });
+        });*/
       /*.then(function () {
           // 항상 실행
         });*/
@@ -85,13 +84,23 @@ function LoginPage(props) {
   }
 
   return (
-    <div className="LoginPage" style={ {margin: '90px auto' }}>
-      <div className="InputId" >
-        <h3>ID (Email) :{" "}</h3>
-        <Input placeholder="email" id="inputId" type="email" onChange={ifChange}/>
+    <div className="LoginPage" style={{ margin: "90px auto" }}>
+      <div className="InputId">
+        <h3>ID (Email) : </h3>
+        <Input
+          placeholder="email"
+          id="inputId"
+          type="email"
+          onChange={ifChange}
+        />
         <br />
-        <h3>Password :{" "}</h3>
-        <Input placeholder="password" id="inputPswd" type="password" onChange={ifChange}/>
+        <h3>Password : </h3>
+        <Input
+          placeholder="password"
+          id="inputPswd"
+          type="password"
+          onChange={ifChange}
+        />
         <br />
         <span style={{ color: "red" }}>{loginResult}</span>
         <br />
