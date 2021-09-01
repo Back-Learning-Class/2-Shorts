@@ -65,7 +65,8 @@ router.post("/reqLogin", async (req, res) => {
         console.log("cookie test", req.cookies);
         res.status(200).json({
           selectResult: 0,
-          token: accessToken
+          token: accessToken,
+          loginSuccess: true
           //isAuth: true
         });
       } else {

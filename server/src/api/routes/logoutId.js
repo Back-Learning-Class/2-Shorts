@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-router.get("/logout", auth, async (req, res) => {
+router.get("/logout", async (req, res) => {
   console.log("loguuset", req.user);
 
   let accesTokenId = jwt.decode(req.cookies.w_auth);
