@@ -9,7 +9,7 @@ function RightNav(props) {
 
   const logoutHandler = () => {
     axios
-      .get("http://localhost:5000/api/route/logout", { withCredentials: true })
+      .get("/api/route/logout", { withCredentials: true })
       .then(response => {
         console.log("logouttest");
         if (response.status === 200) {

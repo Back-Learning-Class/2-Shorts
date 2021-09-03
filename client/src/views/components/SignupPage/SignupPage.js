@@ -73,7 +73,7 @@ function SignupPage(props) {
 
       // 서버에 중복검사 요청
       axios
-        .post("http://localhost:5000/api/route/selectId", {
+        .post("/api/route/selectId", {
           reqId: inId
         })
         .then(function (response) {

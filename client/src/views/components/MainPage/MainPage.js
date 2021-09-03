@@ -17,7 +17,7 @@ function MainPage() {
 
   const getData = () => {
     axios
-      .get("http://localhost:5000/api/route/", { withCredentials: true })
+      .get("/api/route/", { withCredentials: true })
       .then(response => {
         if (response.data) {
           setshortVideoid(response.data.idResult);

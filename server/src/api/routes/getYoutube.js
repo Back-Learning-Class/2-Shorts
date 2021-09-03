@@ -19,7 +19,7 @@ let option = {
     maxResults: 16,
     //order: "relevance",
     q: "##shorts",
-    //regionCode: "KR",
+    regionCode: "KR",
     type: "video",
     //videoDuration: "short",
     //videoSyndicated: "any",
