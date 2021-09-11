@@ -1,10 +1,12 @@
 import Sequelize from "sequelize";
 import User from "./userModel.js"; // User 모델
 import Token from "./tokenModel.js";
+import Record from "./recordModel.js";
 
 // json 파일 가져오기
 // import seqConfig from "../../config/seqConfig.json";
 import { readFile } from "fs/promises"; // json 파일을 읽기 위한 모듈
+import { seq } from "async";
 const seqConfig = JSON.parse(
   await readFile(new URL("../../config/seqConfig.json", import.meta.url))
 );
@@ -20,7 +22,15 @@ const sequelize = new Sequelize(
   config.password,
   config
 );
+
 const sequelize1 = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config
+);
+
+const sequelize2 = new Sequelize(
   config.database,
   config.username,
   config.password,
@@ -29,13 +39,16 @@ const sequelize1 = new Sequelize(
 
 db.sequelize = sequelize;
 db.sequelize1 = sequelize1;
+db.sequelize2 = sequelize2;
 
 // db.Sequelize02 = new 새로 생성할 데이터베이스
 
 db.User = User;
 db.Token = Token;
+db.Record = Record;
 
 User.init(sequelize); // 연결객체에 모델을 연결 // User 모델에 sql을 연결
 Token.init(sequelize1);
+Record.init(sequelize2);
 
 export default db;

@@ -74,6 +74,41 @@
             "date": 1630338568534,
             "name": "/Users/jun/2-Shorts/server/log/info/2021-08-31.log",
             "hash": "abed12bc35497fb88bced6a2c73abd1f"
+        },
+        {
+            "date": 1630481927782,
+            "name": "/Users/jun/2-Shorts/server/log/info/2021-09-01.log",
+            "hash": "ff5720b3a1a12e544efb86052b01a22f"
+        },
+        {
+            "date": 1630568660407,
+            "name": "/Users/jun/2-Shorts/server/log/info/2021-09-02.log",
+            "hash": "ce20549ee6390f85f5729e62dfe603df"
+        },
+        {
+            "date": 1630745304205,
+            "name": "/Users/jun/2-Shorts/server/log/info/2021-09-04.log",
+            "hash": "8a3857b5408aee1ba32e85af3c1e545f"
+        },
+        {
+            "date": 1631101741273,
+            "name": "/Users/jun/2-Shorts/server/log/info/2021-09-08.log",
+            "hash": "1cdf47da4d12d075619576aac9cc233e"
+        },
+        {
+            "date": 1631171281441,
+            "name": "/Users/jun/2-Shorts/server/log/info/2021-09-09.log",
+            "hash": "adbee9ce506320d8598b88c823af869f"
+        },
+        {
+            "date": 1631207574032,
+            "name": "/Users/jun/2-Shorts/server/log/info/2021-09-10.log",
+            "hash": "886591ca4399cdc32785c2f9e1048840"
+        },
+        {
+            "date": 1631356132027,
+            "name": "/Users/jun/2-Shorts/server/log/info/2021-09-11.log",
+            "hash": "9198b87327861072b3081911063f0c3a"
         }
     ]
 }

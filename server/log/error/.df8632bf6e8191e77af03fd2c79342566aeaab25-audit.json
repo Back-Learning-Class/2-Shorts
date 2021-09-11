@@ -64,6 +64,26 @@
             "date": 1630338568538,
             "name": "/Users/jun/2-Shorts/server/log/error/2021-08-31.log",
             "hash": "2583b0e3d50ae29fbc57fa47cf41bfa4"
+        },
+        {
+            "date": 1630482816276,
+            "name": "/Users/jun/2-Shorts/server/log/error/2021-09-01.log",
+            "hash": "e5b3a58e35a5fd889a0af4c7b6c8147f"
+        },
+        {
+            "date": 1631171281444,
+            "name": "/Users/jun/2-Shorts/server/log/error/2021-09-09.log",
+            "hash": "cb70aec78278813710b6298226c227c2"
+        },
+        {
+            "date": 1631207574036,
+            "name": "/Users/jun/2-Shorts/server/log/error/2021-09-10.log",
+            "hash": "ed24ed89a6bee1098de91b24ec75cedc"
+        },
+        {
+            "date": 1631356132031,
+            "name": "/Users/jun/2-Shorts/server/log/error/2021-09-11.log",
+            "hash": "65f497fe0d8802b264cc1f4d3561d659"
         }
     ]
 }
