@@ -31,6 +31,9 @@ function RightNav(props) {
         <Menu.Item key="app">
           <a href="/Signup">회원가입</a>
         </Menu.Item>
+        <Menu.Item key="history">
+          <a href="/record">기록</a>
+        </Menu.Item>
       </Menu>
     );
   } else {
